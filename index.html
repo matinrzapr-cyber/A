@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alma - My RockStar ❤️</title>
+    <!-- فونت خفن راک -->
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background: linear-gradient(135deg, #0d0d0d 0%, #1a0826 50%, #000000 100%);
+            font-family: Tahoma, sans-serif;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; color: #fff; overflow: hidden; text-align: center;
+        }
+
+        .falling-element { position: fixed; top: -10vh; z-index: 1; pointer-events: none; animation: fall linear infinite; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+
+        .container {
+            background: rgba(20, 20, 30, 0.85);
+            padding: 40px; border-radius: 20px;
+            border: 1px solid rgba(255, 0, 100, 0.4);
+            box-shadow: 0 0 30px rgba(255, 0, 80, 0.4);
+            max-width: 90%; width: 350px; z-index: 2; backdrop-filter: blur(10px);
+        }
+
+        .photo {
+            width: 180px; height: 180px;
+            border-radius: 50%; object-fit: cover;
+            border: 5px solid #ff0055;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            margin-bottom: 10px;
+        }
+
+        .name {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 3em; color: #fff;
+            text-shadow: 0 0 15px #ff2a6d;
+            margin: 10px 0;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff0055, #ff5000);
+            color: white; border: none;
+            padding: 14px 28px; font-size: 16px; font-weight: bold;
+            border-radius: 30px; cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.5);
+            transition: transform 0.2s; margin-top: 15px;
+        }
+        button:hover { transform: scale(1.05); }
+
+        .letter {
+            display: none; margin-top: 20px; padding: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px; border: 1px dashed #ff0055; color: #eaeaea;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <!-- https://uplod.ir/c08srli5h5d0/Whiplash.mp3.htm -->
+        <source src="URL_OF_YOUR_WHIPLASH_MP3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <!--https://uploadkon.ir/uploads/250119_26ChatGPT-Image-Jul-4-2026-11-03-54-PM.png -->
+        <img class="photo" src="https://uploadkon.ir/uploads/250119_26ChatGPT-Image-Jul-4-2026-11-03-54-PM.png" alt="Alma">
+        
+        <div class="name">Alma</div>
+        <p>You are my RockStar 🎸❤️</p>
+        
+        <button onclick="openLetter()">Play & Read My Message 🤘</button>
+        
+        <div id="letterText" class="letter">
+            سلام عزیزم 
+          فقط میخواستم بگم که تو خوشگل ترین و خفن ترین ادمی هستی که باهاش اشنا شدم تو بینظیری حرف نداری من واقعا نمیدونم چجوریی عاشقت شدم ولی دیگه شدم و خیلی دوست دارم 
+          من واقعا ادمه احساسی نیستم ولی از وقتی تو اومدی قند تو دلم اب میشه  وقتی میبینمت یا وقتی صداتو می‌شنوم قلبم میریزه و خیلی عاشقت شدم و تحمل دیدنه یه قطره اشک از چشماتم ندارم 
+           واقعا زندگیم قبله تو خیلییی بد بود وقتی تو اومدی به زندگی سیاه سفید و پر از افسردگی عشق اضافه کردی و من خوشحالم که تو اومدی  و مرسی که وقتی گفتم عاشقتم از پیشم نرفتی و تنهام نزاشتی 
+          واقعا خیلی دوست دارم و یه تاره موهاتو به دنیا نمیدم قربونت برم مرسی که هستی زندگیم  
+          عاشقتممممممم 🥹🥹❤️❤️❤️❤️💋🫂... <br>
+            تو ریتم قشنگ زندگی منی! ❤️⚡
+        </div>
+    </div>
+
+    <script>
+        const symbols = ['❤️', '🎸', '🎵', '⚡', '🎶', '🌹'];
+        function createFallingElement() {
+            const el = document.createElement('div');
+            el.classList.add('falling-element');
+            el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            el.style.left = Math.random() * 100 + 'vw';
+            el.style.fontSize = (Math.random() * 10 + 20) + 'px';
+            el.style.animationDuration = Math.random() * 3 + 3 + 's';
+            el.style.opacity = Math.random() * 0.7 + 0.3;
+            document.body.appendChild(el);
+            setTimeout(() => { el.remove(); }, 6000);
+        }
+        setInterval(createFallingElement, 250);
+
+        function openLetter() {
+            document.getElementById('letterText').style.display = 'block';
+            var music = document.getElementById('bgMusic');
+            music.volume = 0.3; // تنظیم صدا روی ۳۰ درصد
+            music.play();
+        }
+    </script>
+</body>
+</html>
