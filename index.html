@@ -117,3 +117,50 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Alma - My RockStar ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; background: linear-gradient(135deg, #0d0d0d 0%, #1a0826 50%, #000000 100%); font-family: Tahoma; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: #fff; overflow: hidden; text-align: center; }
+        .container { background: rgba(20, 20, 30, 0.85); padding: 40px; border-radius: 20px; border: 1px solid #ff0055; width: 320px; z-index: 2; }
+        .photo { width: 180px; height: 180px; border-radius: 50%; border: 5px solid #ff0055; margin-bottom: 10px; }
+        .name { font-family: 'Permanent Marker', cursive; font-size: 3em; color: #fff; margin: 10px 0; }
+        button { background: #ff0055; color: white; border: none; padding: 15px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        .letter { display: none; margin-top: 20px; padding: 18px; border: 1px dashed #ff0055; text-align: right; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <img class="photo" src="https://uploadkon.ir/uploads/250119_26ChatGPT-Image-Jul-4-2026-11-03-54-PM.png" alt="Alma">
+        <div class="name">Alma</div>
+        <p>You are my RockStar 🎸❤️</p>
+        <button onclick="playMusicAndShow()">Play & Read My Message 🤘</button>
+        <div id="letterText" class="letter">
+            سلام عزیزم، متن عاشقانه تو...
+        </div>
+    </div>
+
+    <script>
+        function playMusicAndShow() {
+            var music = document.getElementById('bgMusic');
+            document.getElementById('letterText').style.display = 'block';
+            
+            music.volume = 0.5;
+            music.play().then(() => {
+                console.log("Music started playing!");
+            }).catch(error => {
+                console.log("Autoplay blocked or failed:", error);
+                alert("لطفا مطمئن شو گوشیت روی سایلنت نیست و صدای مدیا بازه.");
+            });
+        }
+    </script>
+</body>
+</html>
