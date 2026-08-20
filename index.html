@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>VIP Access | برای تک‌ستاره من الما عشقه زندگیم 💖💘 ✨</title>
+    <title>VIP Access | برایه عشق زندگیم آلما 💘💖 ✨</title>
     <style>
         :root {
             --bg-color: #050611;
@@ -37,6 +37,73 @@
             z-index: 1;
         }
 
+        /* Top Persistent Avatar Header for Alma */
+        .gf-avatar-wrapper {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .heart-frame {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-cyan), var(--accent-gold));
+            box-shadow: 0 0 25px rgba(255, 42, 109, 0.7), 0 0 10px rgba(5, 217, 232, 0.5);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 42, 109, 0.6), 0 0 30px rgba(255, 42, 109, 0.3); transform: scale(1); }
+            100% { box-shadow: 0 0 25px rgba(5, 217, 232, 0.9), 0 0 45px rgba(255, 42, 109, 0.6); transform: scale(1.04); }
+        }
+
+        .gf-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            transform: rotate(0deg); /* Straightened */
+            display: block;
+        }
+
+        .heart-badge {
+            position: absolute;
+            font-size: 1.1rem;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
+            animation: floatBadge 2s infinite ease-in-out alternate;
+        }
+        .badge-1 { top: -6px; right: -4px; animation-delay: 0s; }
+        .badge-2 { bottom: -2px; left: -6px; animation-delay: 0.7s; }
+        .badge-3 { top: -6px; left: -4px; animation-delay: 1.4s; }
+
+        @keyframes floatBadge {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-5px) scale(1.2); }
+        }
+
+        .gf-name {
+            margin-top: 6px;
+            font-size: 1.25rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, #ff2a6d, #ffb703, #05d9e8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 42, 109, 0.8);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
         .screen {
             position: absolute;
             top: 0; left: 0;
@@ -51,6 +118,7 @@
             transform: scale(0.9);
             z-index: 10;
             padding: 20px;
+            padding-top: 120px; /* Space for top photo header */
         }
 
         .screen.active {
@@ -66,7 +134,7 @@
             -webkit-backdrop-filter: blur(35px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 28px;
-            padding: 28px 24px;
+            padding: 24px 20px;
             text-align: center;
             box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(255, 42, 109, 0.25);
             width: 100%;
@@ -96,7 +164,7 @@
 
         h2 {
             color: #fff;
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             margin-top: 5px;
             margin-bottom: 10px;
             font-weight: 700;
@@ -104,9 +172,9 @@
 
         p {
             color: #cbd5e1;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .btn {
@@ -143,13 +211,13 @@
         /* Heart Catch Mini-Game Stage */
         .heart-game-box {
             width: 100%;
-            height: 180px;
+            height: 160px;
             background: rgba(0, 0, 0, 0.3);
             border: 2px dashed rgba(255, 42, 109, 0.4);
             border-radius: 20px;
             position: relative;
             overflow: hidden;
-            margin: 15px 0;
+            margin: 12px 0;
             cursor: pointer;
         }
 
@@ -168,15 +236,15 @@
 
         /* Sliders */
         .slider-group {
-            margin: 18px 0;
+            margin: 14px 0;
             text-align: right;
         }
 
         .slider-group label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: #cbd5e1;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         input[type=range] {
@@ -189,19 +257,19 @@
         .memory-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 15px 0;
+            gap: 8px;
+            margin: 12px 0;
         }
 
         .memory-card {
             aspect-ratio: 1;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 14px;
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: transform 0.3s, background 0.3s;
         }
@@ -220,8 +288,8 @@
         /* Wheel of Fortune */
         .wheel-container {
             position: relative;
-            width: 220px; height: 220px;
-            margin: 15px auto;
+            width: 200px; height: 200px;
+            margin: 10px auto;
         }
 
         canvas#wheelCanvas {
@@ -368,7 +436,21 @@
 </head>
 <body>
 
+    <!-- Soft Background Music (Starts Softly on First Touch/Click) -->
+    <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=soft-piano-romantic-10339.mp3"></audio>
+
     <canvas id="bgCanvas"></canvas>
+
+    <!-- Top Persistent Photo Header (Visible until final Galaxy scene) -->
+    <div id="gf-avatar-container" class="gf-avatar-wrapper">
+        <div class="heart-frame">
+            <span class="heart-badge badge-1">💖</span>
+            <span class="heart-badge badge-2">✨</span>
+            <span class="heart-badge badge-3">🎀</span>
+            <img src="https://uploadkon.ir/uploads/42c320_26IMG-20260726-135403-407.jpg" alt="Alma" class="gf-photo">
+        </div>
+        <div class="gf-name">✨ Alma ✨</div>
+    </div>
 
     <!-- STEP 1: VIP Verification -->
     <div id="step-1" class="screen active">
@@ -470,7 +552,7 @@
 
             <div class="wheel-container">
                 <div class="wheel-pointer">🔻</div>
-                <canvas id="wheelCanvas" width="220" height="220"></canvas>
+                <canvas id="wheelCanvas" width="200" height="200"></canvas>
             </div>
 
             <button class="btn" id="spinBtn" onclick="spinWheel()">بچرخون! 🎡</button>
@@ -512,7 +594,21 @@
     </div>
 
     <script>
-        // High Quality Soft Romantic Web Audio Synthesizer
+        // Automatic Low Volume Romantic Background Music Setup
+        const bgMusic = document.getElementById('bgMusic');
+        bgMusic.volume = 0.2; // Soft, ambient volume
+
+        function playBgMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(() => {});
+            }
+        }
+
+        // Start Music on Any User Interaction
+        document.addEventListener('click', playBgMusic, { once: true });
+        document.addEventListener('touchstart', playBgMusic, { once: true });
+
+        // High Quality Soft Sound Effects Synthesizer
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -523,6 +619,7 @@
 
         function playSound(type) {
             ensureAudio();
+            playBgMusic();
             let osc = audioCtx.createOscillator();
             let gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
@@ -531,7 +628,7 @@
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.08);
             } else if (type === 'win') {
@@ -541,7 +638,7 @@
                     o.type = 'sine';
                     o.connect(g); g.connect(audioCtx.destination);
                     o.frequency.value = f;
-                    g.gain.setValueAtTime(0.15, audioCtx.currentTime + i * 0.1);
+                    g.gain.setValueAtTime(0.1, audioCtx.currentTime + i * 0.1);
                     g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.1 + 0.3);
                     o.start(audioCtx.currentTime + i * 0.1);
                     o.stop(audioCtx.currentTime + i * 0.1 + 0.3);
@@ -550,14 +647,14 @@
                 osc.type = 'triangle';
                 osc.frequency.setValueAtTime(220, audioCtx.currentTime);
                 osc.frequency.linearRampToValueAtTime(160, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.2);
             } else if (type === 'flee') {
                 osc.type = 'sine';
                 osc.frequency.setValueAtTime(600, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.1);
             }
@@ -625,7 +722,7 @@
                 
                 if (heartScoreCount >= 5) {
                     playSound('win');
-                    container.innerHTML = '<div style="color:var(--accent-cyan); font-weight:bold; margin-top:70px;">🎉 فوق‌العاده بود! تمام قلب‌ها رو تصاحب کردی!</div>';
+                    container.innerHTML = '<div style="color:var(--accent-cyan); font-weight:bold; margin-top:60px;">🎉 فوق‌العاده بود! تمام قلب‌ها رو تصاحب کردی!</div>';
                     document.getElementById('nextHeartBtn').style.display = 'block';
                 } else {
                     spawnHeartTarget();
@@ -701,16 +798,16 @@
             for (let i = 0; i < segments.length; i++) {
                 ctx.beginPath();
                 ctx.fillStyle = colors[i];
-                ctx.moveTo(110, 110);
-                ctx.arc(110, 110, 110, i * arc, (i + 1) * arc);
+                ctx.moveTo(100, 100);
+                ctx.arc(100, 100, 100, i * arc, (i + 1) * arc);
                 ctx.fill();
 
                 ctx.save();
-                ctx.translate(110, 110);
+                ctx.translate(100, 100);
                 ctx.rotate(i * arc + arc / 2);
                 ctx.fillStyle = "#fff";
-                ctx.font = "bold 10px Tahoma";
-                ctx.fillText(segments[i], 30, 4);
+                ctx.font = "bold 9px Tahoma";
+                ctx.fillText(segments[i], 25, 4);
                 ctx.restore();
             }
         }
@@ -781,49 +878,16 @@
         // Full Interactive Galaxy Space Engine
         function triggerGalaxyScene() {
             document.getElementById('finalModal').style.display = 'none';
+            // Hide the top avatar header when entering the final space galaxy scene
+            document.getElementById('gf-avatar-container').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('gf-avatar-container').style.display = 'none';
+            }, 500);
+
             const overlay = document.getElementById('galaxyOverlay');
             overlay.style.display = 'flex';
             playSound('win');
-            playLushRomanticMusic();
             initCinemaGalaxyCanvas();
-        }
-
-        // Deep Warm & Soothing Romantic Polyphonic Music Engine
-        function playLushRomanticMusic() {
-            ensureAudio();
-            
-            // Romantic Soft Music Box / Piano Arpeggio Notes (Cmaj7 -> Am7 -> Fmaj7 -> G7)
-            const melodySequence = [
-                523.25, 659.25, 783.99, 1046.50, // Cmaj7 (C5, E5, G5, C6)
-                440.00, 523.25, 659.25, 880.00,  // Am7 (A4, C5, E5, A5)
-                349.23, 440.00, 523.25, 698.46,  // Fmaj7 (F4, A4, C5, F5)
-                392.00, 493.88, 587.33, 783.99   // G7 (G4, B4, D5, G5)
-            ];
-            
-            let noteIdx = 0;
-
-            setInterval(() => {
-                let freq = melodySequence[noteIdx % melodySequence.length];
-                
-                let osc = audioCtx.createOscillator();
-                let gain = audioCtx.createGain();
-                
-                // Soft sine wave for piano / music box timbre
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                
-                // Gentle acoustic envelope
-                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.8);
-                
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                
-                osc.start();
-                osc.stop(audioCtx.currentTime + 1.8);
-                
-                noteIdx++;
-            }, 450); // Romantic tempo
         }
 
         // Romantic Quote Rotator
@@ -862,7 +926,7 @@
             }));
 
             // Floating 3D Love Texts
-            const phrases = ["I LOVE YOU", "دوستت دارم", "تک‌ستاره من", "عاشقتم", "I LOVE YOU", "زندگیمی", "ماه من"];
+            const phrases = ["Alma", "I LOVE YOU", "دوستت دارم", "تک‌ستاره من", "عاشقتم Alma", "زندگیمی", "ماه من"];
             const spaceTexts = Array.from({ length: 30 }, () => ({
                 text: phrases[Math.floor(Math.random() * phrases.length)],
                 x: (Math.random() - 0.5) * w * 1.8,
