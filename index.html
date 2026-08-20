@@ -2,71 +2,73 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>برای تو ❤️</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>برای دختر کوچولوی من ❤️</title>
     <style>
         * {
             box-sizing: border-box;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #0b0b12;
+            width: 100%;
+            height: 100%;
+            background-color: #05050a;
             color: #fff;
             font-family: 'Tahoma', 'Vazirmatn', sans-serif;
             overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative;
         }
 
-        /* Lock Screen (Minimal Design) */
+        /* Lock Screen */
         #lock-screen {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #1a102f 0%, #05050a 100%);
+            background: radial-gradient(circle, #1f0f35 0%, #030308 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
-            transition: opacity 1s ease, visibility 1s;
+            transition: opacity 1.2s ease, visibility 1.2s;
         }
 
         .lock-box {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 182, 193, 0.2);
+            padding: 30px 25px;
+            border-radius: 24px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 25px rgba(255, 105, 180, 0.2);
             max-width: 90%;
             width: 340px;
         }
 
         .lock-box h2 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: #ff9ebb;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            color: #ffb3c6;
             font-weight: normal;
+            line-height: 1.5;
         }
 
         .date-selectors {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         select {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: #fff;
-            padding: 10px 15px;
-            border-radius: 10px;
+            padding: 10px 14px;
+            border-radius: 12px;
             font-size: 1rem;
             outline: none;
             cursor: pointer;
@@ -74,25 +76,26 @@
         }
 
         select option {
-            background: #1a102f;
+            background: #190a28;
             color: #fff;
         }
 
         #unlockBtn {
-            background: linear-gradient(45deg, #ff4081, #ff80ab);
+            background: linear-gradient(45deg, #ff3366, #ff758c);
             border: none;
             color: white;
-            padding: 10px 30px;
+            padding: 12px 35px;
             font-size: 1rem;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.4);
-            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 51, 102, 0.4);
+            transition: all 0.3s ease;
             font-family: inherit;
+            font-weight: bold;
         }
 
-        #unlockBtn:hover {
-            transform: scale(1.05);
+        #unlockBtn:active {
+            transform: scale(0.95);
         }
 
         #error-msg {
@@ -100,22 +103,45 @@
             font-size: 0.85rem;
             margin-top: 15px;
             display: none;
+            line-height: 1.4;
         }
 
-        /* Canvas Animation */
+        /* Hint Overlay for 3D Drag */
+        #hint-text {
+            position: absolute;
+            top: 25px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            pointer-events: none;
+            z-index: 5;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 8px rgba(255,105,180,0.8);
+            display: none;
+        }
+
+        /* 3D Canvas */
         canvas {
             position: absolute;
             top: 0; left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 1;
+            cursor: grab;
+        }
+
+        canvas:active {
+            cursor: grabbing;
         }
 
         /* Floating Stars */
         .star {
             position: absolute;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
             z-index: 10;
-            filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 15px #ff69b4);
+            filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px #ff69b4);
             animation: float 4s ease-in-out infinite alternate, pulse 2s infinite alternate;
             transition: transform 0.2s;
         }
@@ -126,84 +152,145 @@
 
         @keyframes float {
             0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-15px) rotate(15deg); }
+            100% { transform: translateY(-18px) rotate(20deg); }
         }
 
         @keyframes pulse {
-            0% { opacity: 0.6; }
+            0% { opacity: 0.5; }
             100% { opacity: 1; }
         }
 
-        /* Envelope Icon */
-        #envelope {
+        /* Bottom Floating Bar */
+        #bottom-bar {
             position: absolute;
             bottom: 25px;
-            font-size: 2.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            display: none;
+        }
+
+        .icon-btn {
+            font-size: 1.8rem;
             cursor: pointer;
-            animation: bounce 2s infinite;
-            z-index: 10;
-            filter: drop-shadow(0 0 10px rgba(255,105,180,0.5));
+            transition: transform 0.2s ease, filter 0.2s ease;
+            position: relative;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
+        .icon-btn:hover {
+            transform: scale(1.25);
+            filter: drop-shadow(0 0 10px #ff69b4);
         }
 
-        /* Modals (Star Text & Letter) */
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             z-index: 500;
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             color: #222;
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 85%;
+            padding: 28px 22px;
+            border-radius: 20px;
+            max-width: 88%;
             width: 420px;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            box-shadow: 0 15px 35px rgba(255, 105, 180, 0.4);
             text-align: justify;
             line-height: 1.8;
             animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
+            from { transform: scale(0.7); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
         .close-btn {
             position: absolute;
-            top: 10px;
+            top: 12px;
             left: 15px;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
             color: #888;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #d10056;
         }
 
         .star-modal-content {
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: #d10056;
             padding: 20px 10px;
+            font-weight: bold;
         }
 
         .letter-modal h2, .letter-modal h3 {
             text-align: center;
             color: #d10056;
             margin-top: 0;
+        }
+
+        /* Coupons Grid */
+        .coupons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .coupon-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            color: #800020;
+            font-weight: bold;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px dashed #ff4081;
+        }
+
+        .coupon-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 64, 129, 0.3);
+        }
+
+        /* Burst Floating Heart Animation */
+        .burst-heart {
+            position: absolute;
+            pointer-events: none;
+            animation: moveUp 1.5s ease-out forwards;
+            z-index: 1000;
+        }
+
+        @keyframes moveUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.5); opacity: 0; }
         }
     </style>
 </head>
@@ -231,18 +318,25 @@
                 </select>
             </div>
             <button id="unlockBtn">ورود 💖</button>
-            <div id="error-msg">😔💔هیییییع یادت نیستتتت بچهههه؟! دوباره سعی کن </div>
+            <div id="error-msg">😔💔 هییییع یادت نیستتتت بچهههه؟! دوباره سعی کن!</div>
         </div>
     </div>
 
-    <!-- Heart Animation Canvas -->
+    <!-- Screen Hint -->
+    <div id="hint-text">👈 صفحه رو بکش تا دور قلب کهکشانی بچرخی ✨ 👉</div>
+
+    <!-- 3D Heart Canvas -->
     <canvas id="heartCanvas"></canvas>
 
     <!-- 10 Floating Stars -->
     <div id="starsContainer"></div>
 
-    <!-- Envelope -->
-    <div id="envelope">💌</div>
+    <!-- Bottom Interactive Bar -->
+    <div id="bottom-bar">
+        <div class="icon-btn" id="envelopeBtn" title="نامه عاشقانه">💌</div>
+        <div class="icon-btn" id="couponsBtn" title="کوپن‌های غافلگیری">🎁</div>
+        <div class="icon-btn" id="burstBtn" title="انفجار عشق">💥</div>
+    </div>
 
     <!-- Modal for Star Messages -->
     <div id="starModal" class="modal">
@@ -256,7 +350,7 @@
     <div id="letterModal" class="modal">
         <div class="modal-content letter-modal">
             <span class="close-btn" onclick="closeModal('letterModal')">&times;</span>
-            <h2> عاشقتم ❤️</h2>
+            <h2>عاشقتم ❤️</h2>
             <h3>دختر کوچولو 💗،</h3>
             <p>آدم‌هایی هستند که وارد زندگی‌مان می‌شوند و بدون هیچ ردپایی می‌روند، اما تو به شکلی متفاوت آمدی. رفته‌رفته به فردی نادیده‌نشدنی و ضروری در زندگی‌ام تبدیل شدی. این فقط به خاطر لحظات قشنگ یا حرف‌های شیرین نبود، بلکه چون حواسش را هم نداشتی اما باعث شدی خیلی از روزهای من بهتر شوند. از وقتی پیدا شدی، فهمیدم دوست داشتن را می‌شود در جزئیات کوچک حس کرد؛ در یک گفتگوی معمولی، در یک خنده مشترک، یا فقط در همین که بدانم هستی.</p>
             <p>نمی‌دانم آینده چه چیزی برایمان دارد، اما این را خوب می‌دانم که تا وقتی کنار هم راه می‌رویم، می‌خواهم به ساختن خاطرات، حمایت از هدف‌هایت، جشن گرفتن موفقیت‌هایت و آغوش کشیدنت وقتی همه‌چیز خسته‌کننده می‌شود ادامه دهم. تو فرد بسیار مهمی برای من هستی و از ته دل امیدوارم هیچ‌وقت فراموش نکنی چقدر باارزشی و چقدر برایم اهمیت داری.</p>
@@ -264,9 +358,58 @@
         </div>
     </div>
 
+    <!-- Modal for Coupons / Surprises -->
+    <div id="couponsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('couponsModal')">&times;</span>
+            <h2 style="text-align:center; color:#d10056; margin-top:0;">کوپن‌های اختصاصی تو 🎫✨</h2>
+            <p style="text-align:center; font-size:0.9rem; color:#666;">روی هر کوپن بزنی، هر زمانی خواستی می‌تونی خرجش کنی!</p>
+            <div class="coupons-grid">
+                <div class="coupon-card" onclick="claimCoupon('یک روز گردش و تفریح کاملاً به انتخاب تو 🚗🍦')">کوپن ۱: گردش اختصاصی 🎡</div>
+                <div class="coupon-card" onclick="claimCoupon('حق با توئه! (توی یک بحث می‌تونی استفاده کنی و برنده شی) 👑')">کوپن ۲: حق با توئه! 🏆</div>
+                <div class="coupon-card" onclick="claimCoupon('غذای مورد علاقه‌ت مهمون من! 🍕🍔')">کوپن ۳: شام/پیتزا مهمون من 🍕</div>
+                <div class="coupon-card" onclick="claimCoupon('یک ماساژ ۱۵ دقیقه‌ای برای رفع خستگی 💆‍♀️')">کوپن ۴: ماساژ اختصاصی 💆‍♀️</div>
+                <div class="coupon-card" onclick="claimCoupon('دیدن فیلم دلخواهت باهم حتی اگه من دوستش نداشته باشم! 🎬')">کوپن ۵: شب فیلم 🍿</div>
+                <div class="coupon-card" onclick="claimCoupon('یک بغل محکم و طولانی هروقت کلافه بودی 🫂❤️')">کوپن ۶: آغوش بی‌شرط 🫂</div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ==========================================
-        // 1. متن ۱۰ ستاره را اینجا می‌توانی تغییر دهی:
+        // Sound System (Web Audio API - No external assets needed!)
+        // ==========================================
+        let audioCtx = null;
+        function playTone(freq, type = 'sine', duration = 0.5) {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        function playChime() {
+            playTone(523.25, 'sine', 0.4); // C5
+            setTimeout(() => playTone(659.25, 'sine', 0.5), 100); // E5
+            setTimeout(() => playTone(783.99, 'sine', 0.6), 200); // G5
+            setTimeout(() => playTone(1046.50, 'sine', 0.8), 300); // C6
+        }
+
+        // ==========================================
+        // Star Messages
         // ==========================================
         const starMessages = [
             "ستاره ۱: اولین باری که دیدمت، بهترین روز زندگیم شد ✨",
@@ -290,7 +433,7 @@
             daySelect.appendChild(opt);
         }
 
-        // Lock Screen Logic
+        // Lock Screen Unlock
         const lockScreen = document.getElementById('lock-screen');
         const unlockBtn = document.getElementById('unlockBtn');
         const errorMsg = document.getElementById('error-msg');
@@ -299,39 +442,41 @@
             const day = daySelect.value;
             const month = document.getElementById('monthSelect').value;
 
-            // شرط تاریخ درست: ۲۱ اردیبهشت
             if (day === "21" && month === "اردیبهشت") {
+                playChime();
                 lockScreen.style.opacity = '0';
                 setTimeout(() => {
                     lockScreen.style.visibility = 'hidden';
+                    document.getElementById('hint-text').style.display = 'block';
+                    document.getElementById('bottom-bar').style.display = 'flex';
                     initMainScene();
                 }, 1000);
             } else {
+                playTone(180, 'sawtooth', 0.3);
                 errorMsg.style.display = 'block';
             }
         });
 
-        // Main Scene Setup
+        // Initialize Scene
         function initMainScene() {
             createStars();
-            drawHeart();
+            init3DHeart();
         }
 
-        // Generate 10 Floating Stars Randomly
+        // Floating Stars
         function createStars() {
             const container = document.getElementById('starsContainer');
-            // موقعیت‌های تقریبی در صفحه تا روی هم نیفتند
             const positions = [
-                { top: '15%', left: '15%' },
-                { top: '25%', left: '80%' },
-                { top: '40%', left: '10%' },
-                { top: '60%', left: '85%' },
-                { top: '75%', left: '20%' },
-                { top: '20%', left: '50%' },
-                { top: '80%', left: '70%' },
+                { top: '12%', left: '12%' },
+                { top: '22%', left: '82%' },
+                { top: '42%', left: '8%' },
+                { top: '65%', left: '88%' },
+                { top: '80%', left: '18%' },
+                { top: '15%', left: '50%' },
+                { top: '82%', left: '72%' },
                 { top: '50%', left: '90%' },
-                { top: '65%', left: '5%' },
-                { top: '35%', left: '70%' }
+                { top: '68%', left: '6%' },
+                { top: '35%', left: '78%' }
             ];
 
             starMessages.forEach((msg, index) => {
@@ -342,7 +487,9 @@
                 star.style.left = positions[index].left;
                 star.style.animationDelay = `${index * 0.4}s`;
 
-                star.addEventListener('click', () => {
+                star.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    playTone(880, 'sine', 0.3);
                     document.getElementById('starText').innerText = msg;
                     openModal('starModal');
                 });
@@ -351,9 +498,19 @@
             });
         }
 
-        // Modals Logic
-        document.getElementById('envelope').addEventListener('click', () => {
+        // Modals Controls
+        document.getElementById('envelopeBtn').addEventListener('click', () => {
+            playTone(600, 'sine', 0.3);
             openModal('letterModal');
+        });
+
+        document.getElementById('couponsBtn').addEventListener('click', () => {
+            playTone(700, 'sine', 0.3);
+            openModal('couponsModal');
+        });
+
+        document.getElementById('burstBtn').addEventListener('click', (e) => {
+            createHeartBurst(window.innerWidth / 2, window.innerHeight / 2, 40);
         });
 
         function openModal(id) {
@@ -364,51 +521,201 @@
             document.getElementById(id).style.display = 'none';
         }
 
-        // Close modal when clicking outside content
+        function claimCoupon(text) {
+            playChime();
+            alert(`🎉 این کوپن فعال شد:\n\n"${text}"\n\nهر زمان خواستی اسکرین‌شات بگیر و برام بفرست!`);
+        }
+
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
             }
         }
 
-        // Galactic Heart Animation
-        const canvas = document.getElementById('heartCanvas');
-        const ctx = canvas.getContext('2d');
+        // ==========================================
+        // Heart Explosion Effect
+        // ==========================================
+        function createHeartBurst(x, y, count = 25) {
+            playChime();
+            const symbols = ['❤️', '💖', '💗', '💕', '✨', '🌸'];
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'burst-heart';
+                el.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+                el.style.left = `${x}px`;
+                el.style.top = `${y}px`;
+                
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 80 + Math.random() * 150;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist;
+                
+                el.style.setProperty('--dx', `${dx}px`);
+                el.style.setProperty('--dy', `${dy}px`);
+                el.style.fontSize = `${1.2 + Math.random() * 1.5}rem`;
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1500);
+            }
         }
-        window.addEventListener('resize', resize);
-        resize();
 
-        let time = 0;
-        function drawHeart() {
-            ctx.fillStyle = 'rgba(11, 11, 18, 0.15)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        window.addEventListener('click', (e) => {
+            if (e.target.tagName === 'CANVAS') {
+                createHeartBurst(e.clientX, e.clientY, 12);
+            }
+        });
 
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
+        // ==========================================
+        // 3D Rotating & Beating Text Heart Canvas
+        // ==========================================
+        let rotX = 0, rotY = 0;
+        let isDragging = false;
+        let lastMouseX = 0, lastMouseY = 0;
 
-            for (let i = 0; i < 60; i++) {
-                let t = time + i * 0.1;
+        function init3DHeart() {
+            const canvas = document.getElementById('heartCanvas');
+            const ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            // Generate 3D Heart Points made of "I LOVE YOU" texts
+            const particles = [];
+            const textOptions = ["I LOVE YOU", "دوستت دارم", "❤️", "MY LOVE", "دختر کوچولو"];
+            const numParticles = 350;
+
+            for (let i = 0; i < numParticles; i++) {
+                // Parametric 3D Heart Equation
+                let t = Math.PI * (Math.random() * 2 - 1);
+                let u = Math.PI * (Math.random() * 2 - 1);
+
                 let x = 16 * Math.pow(Math.sin(t), 3);
-                let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+                let y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
+                let z = 8 * Math.sin(u) * Math.sin(t);
 
-                // اندازه قلب متناسب با صفحه
-                let scale = Math.min(canvas.width, canvas.height) / 45;
-                x *= scale;
-                y *= scale;
+                // Add random depth variation
+                x += (Math.random() - 0.5) * 1.5;
+                y += (Math.random() - 0.5) * 1.5;
+                z += (Math.random() - 0.5) * 1.5;
 
-                ctx.fillStyle = `hsl(${330 + Math.sin(t)*25}, 100%, 65%)`;
-                ctx.beginPath();
-                ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-                ctx.fill();
+                particles.push({
+                    x: x,
+                    y: y,
+                    z: z,
+                    text: textOptions[Math.floor(Math.random() * textOptions.length)],
+                    hue: 320 + Math.random() * 35,
+                    size: Math.random() > 0.8 ? 14 : 10
+                });
             }
 
-            ctx.restore();
-            time += 0.04;
-            requestAnimationFrame(drawHeart);
+            // Drag Controls (Mouse / Touch)
+            function startDrag(x, y) {
+                isDragging = true;
+                lastMouseX = x;
+                lastMouseY = y;
+            }
+
+            function moveDrag(x, y) {
+                if (!isDragging) return;
+                let dx = x - lastMouseX;
+                let dy = y - lastMouseY;
+                rotY += dx * 0.008;
+                rotX += dy * 0.008;
+                lastMouseX = x;
+                lastMouseY = y;
+            }
+
+            function stopDrag() {
+                isDragging = false;
+            }
+
+            canvas.addEventListener('mousedown', (e) => startDrag(e.clientX, e.clientY));
+            window.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
+            window.addEventListener('mouseup', stopDrag);
+
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) startDrag(e.touches[0].clientX, e.touches[0].clientY);
+            });
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1) moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+            });
+            window.addEventListener('touchend', stopDrag);
+
+            // Render Loop
+            let time = 0;
+            function render() {
+                ctx.fillStyle = 'rgba(5, 5, 10, 0.2)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                let cx = canvas.width / 2;
+                let cy = canvas.height / 2;
+
+                // Heart Beat scale calculation
+                let beatScale = 1 + 0.08 * Math.sin(time * 4);
+                let baseScale = Math.min(canvas.width, canvas.height) / 42 * beatScale;
+
+                // Auto rotate slowly if not dragging
+                if (!isDragging) {
+                    rotY += 0.005;
+                }
+
+                // Sort particles by Z position for depth sorting
+                const projected = [];
+
+                particles.forEach(p => {
+                    // Scale
+                    let px = p.x * baseScale;
+                    let py = p.y * baseScale;
+                    let pz = p.z * baseScale;
+
+                    // Rotate Y
+                    let x1 = px * Math.cos(rotY) - pz * Math.sin(rotY);
+                    let z1 = px * Math.sin(rotY) + pz * Math.cos(rotY);
+
+                    // Rotate X
+                    let y2 = py * Math.cos(rotX) - z1 * Math.sin(rotX);
+                    let z2 = py * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+                    // Perspective projection
+                    let fov = 350;
+                    let scale = fov / (fov + z2 + 200);
+                    let finalX = cx + x1 * scale;
+                    let finalY = cy + y2 * scale;
+
+                    projected.push({
+                        x: finalX,
+                        y: finalY,
+                        z: z2,
+                        scale: scale,
+                        text: p.text,
+                        hue: p.hue,
+                        size: p.size * scale
+                    });
+                });
+
+                projected.sort((a, b) => b.z - a.z);
+
+                // Draw Particles / Texts
+                projected.forEach(p => {
+                    ctx.font = `bold ${Math.max(8, p.size)}px Tahoma, sans-serif`;
+                    ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, ${Math.min(1, p.scale * 1.2)})`;
+                    ctx.shadowBlur = 12 * p.scale;
+                    ctx.shadowColor = `hsl(${p.hue}, 100%, 60%)`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(p.text, p.x, p.y);
+                });
+
+                ctx.shadowBlur = 0; // reset
+                time += 0.03;
+                requestAnimationFrame(render);
+            }
+
+            render();
         }
     </script>
 </body>
