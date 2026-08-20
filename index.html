@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>VIP Access | برای تک‌ستاره من ✨</title>
+    <title>VIP Access | برای تک‌ستاره من الما عشقه زندگیم 💖💘 ✨</title>
     <style>
         :root {
             --bg-color: #050611;
@@ -274,7 +274,7 @@
             border-top: 1px dashed rgba(255,255,255,0.2);
             text-align: center;
             position: relative;
-            min-height: 120px;
+            min-height: 130px;
         }
 
         .choice-box h3 {
@@ -292,8 +292,9 @@
             border: none;
             cursor: pointer;
             position: absolute;
-            left: 20%;
-            transition: all 0.15s ease;
+            left: 15%;
+            transition: left 0.15s ease, top 0.15s ease;
+            z-index: 100;
         }
 
         .btn-no {
@@ -305,7 +306,8 @@
             border: none;
             cursor: pointer;
             position: absolute;
-            right: 20%;
+            right: 15%;
+            top: 50px;
         }
 
         /* HD Cinema Space Overlay */
@@ -399,7 +401,7 @@
         </div>
     </div>
 
-    <!-- STEP 2: Heart Catch Game (New Fun Game!) -->
+    <!-- STEP 2: Heart Catch Game -->
     <div id="step-2" class="screen">
         <div class="card">
             <span class="badge-romantic">💖 چالش شکار قلب‌های من</span>
@@ -407,9 +409,7 @@
             <h2>قلب‌های شناور رو لمس کن! 🎯</h2>
             <p id="heartGameSubtext">باید ۵ تا قلبِ عشقمون رو شکار کنی تا بریم مرحله بعد:</p>
             
-            <div class="heart-game-box" id="heartContainer" onclick="spawnHeartTarget(event)">
-                <!-- Target hearts will appear dynamically here -->
-            </div>
+            <div class="heart-game-box" id="heartContainer" onclick="spawnHeartTarget(event)"></div>
 
             <div id="heartScore" style="color:var(--accent-gold); font-weight:bold; font-size:1.1rem; margin-bottom:10px;">امتیاز: ۰ / ۵</div>
             <button class="btn" id="nextHeartBtn" style="display:none;" onclick="goToStep(3)">آفرین عشقم! مرحله بعد 🚀</button>
@@ -419,7 +419,7 @@
     <!-- STEP 3: Mood Calibrator -->
     <div id="step-3" class="screen">
         <div class="card">
-            <span class="badge-romantic">🎛️بهینه‌سازی پارامترهای ه</span>
+            <span class="badge-romantic">🎛️ بهینه‌سازی پارامترهای عشق</span>
             <div class="step-indicator">۳ / ۵</div>
             <h2>کالیبراسیون اخلاق و عشقمون</h2>
             <p>مقادیر زیر رو روی تنظیمات دلخواهت بگذار:</p>
@@ -483,16 +483,19 @@
     <div id="finalModal" class="modal">
         <div class="modal-content">
             <h2 style="text-align:center; color:var(--accent-pink);">عاشقتم دیوونه‌وار ❤️</h2>
-            <h3 style="text-align:center; color:var(--accent-cyan);">دختر قشنگ و دوست‌داشتنی  💗</h3>
-            <p> سلام بچهههههه این چیز رو ساختم که اگه یکم هم شده خوشحالت کنم و یه لبخند گوگولی روی لبت بیارم این فقط یه بهونه بود که بهت بگم چقدرررر عاشقتم عزیزم میمیرم برای خوشحال کردنت خیلی دوست دارم عزیزم 🫶🏻 ❤️ 🥹</p>
-            
-
-            
-        
+            <h3 style="text-align:center; color:var(--accent-cyan);">دختر قشنگ و دوست‌داشتنی 💗</h3>
+            <p>سلام بچهههههه این چیز رو ساختم که اگه یکم هم شده خوشحالت کنم و یه لبخند گوگولی روی لبت بیارم این فقط یه بهونه بود که بهت بگم چقدرررر عاشقتم عزیزم میمیرم برای خوشحال کردنت خیلی دوست دارم عزیزم 🫶🏻 ❤️ 🥹</p>
 
             <div class="choice-box">
                 <h3>خوشت اومد عزیزم؟ ✨</h3>
-                <button class="btn-yes" id="btnYes" onmouseover="fleeYesBtn()" onclick="triggerGalaxyScene()">آره 😍</button>
+                <!-- Completely Fleeing "آره" button (Impossible to click/touch) -->
+                <button class="btn-yes" id="btnYes" 
+                        onmouseenter="fleeYesBtn(event)" 
+                        ontouchstart="fleeYesBtn(event)" 
+                        onmousemove="fleeYesBtn(event)" 
+                        onclick="fleeYesBtn(event)">آره 😍</button>
+                
+                <!-- Forced Choice "نه" Button -->
                 <button class="btn-no" onclick="handleNoBtn()">نه 😜</button>
             </div>
         </div>
@@ -509,7 +512,7 @@
     </div>
 
     <script>
-        // High Quality Audio Engine
+        // High Quality Soft Romantic Web Audio Synthesizer
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
@@ -526,37 +529,37 @@
 
             if (type === 'pop') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.08);
             } else if (type === 'win') {
-                [523, 659, 783, 1046].forEach((f, i) => {
+                [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
                     let o = audioCtx.createOscillator();
                     let g = audioCtx.createGain();
+                    o.type = 'sine';
                     o.connect(g); g.connect(audioCtx.destination);
                     o.frequency.value = f;
-                    g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.1);
-                    g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.1 + 0.2);
+                    g.gain.setValueAtTime(0.15, audioCtx.currentTime + i * 0.1);
+                    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.1 + 0.3);
                     o.start(audioCtx.currentTime + i * 0.1);
-                    o.stop(audioCtx.currentTime + i * 0.1 + 0.2);
+                    o.stop(audioCtx.currentTime + i * 0.1 + 0.3);
                 });
             } else if (type === 'err') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(160, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-            } else if (type === 'scream') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(900, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1900, audioCtx.currentTime + 0.15);
-                osc.frequency.exponentialRampToValueAtTime(500, audioCtx.currentTime + 0.3);
-                gain.gain.setValueAtTime(0.35, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+            } else if (type === 'flee') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.1);
             }
         }
 
@@ -590,9 +593,8 @@
             }
         }
 
-        // Step 2: NEW Heart Catch Game Mechanics
+        // Step 2: Heart Catch Game Mechanics
         let heartScoreCount = 0;
-        let heartTimer = null;
 
         function startHeartGame() {
             heartScoreCount = 0;
@@ -642,7 +644,7 @@
         }
 
         // Step 4 Memory Game
-        const icons = ['💘', '💋', '🥰', '🫂', '💘', '💋', '🥰', '🫂','🫀', '🎀', '💗', '😍', '🫀', '🎀', '💗', '😍',];
+        const icons = ['💘', '💋', '🥰', '🫂', '💘', '💋', '🥰', '🫂','🫀', '🎀', '💗', '😍', '🫀', '🎀', '💗', '😍'];
         let flippedCards = [], matchedCount = 0;
 
         function initMemoryGame() {
@@ -750,23 +752,29 @@
             document.getElementById('finalModal').style.display = 'flex';
         }
 
-        // Fleeing "آره" Button Mechanics
-        function fleeYesBtn() {
-            playSound('scream');
+        // Absolutely Unclickable "آره" Button Mechanics
+        function fleeYesBtn(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            playSound('flee');
+
             const btn = document.getElementById('btnYes');
             const box = document.querySelector('.choice-box');
             const rect = box.getBoundingClientRect();
 
-            let newX = Math.random() * (rect.width - 80);
-            let newY = Math.random() * (rect.height - 40);
+            let newX = Math.floor(Math.random() * (rect.width - 90));
+            let newY = Math.floor(Math.random() * (rect.height - 45));
 
             btn.style.left = newX + 'px';
             btn.style.top = newY + 'px';
         }
 
+        // Reaction when she clicks "نه" (Forced Choice)
         function handleNoBtn() {
-            playSound('pop');
-            alert("شوخی می‌کنی دیگه؟! 😂\nمعلومه که باید خوشت بیاد! مگه دست خودته که خوشت نیاد؟! 😜💖");
+            playSound('win');
+            alert("شوخی می‌کنی دیگه؟! 😂\nمعلومه که باید خوشت بیاد! مگه دست خودته که خوشت نیاد؟! 😜💖\nدورت بگردم، حالا بریم سراغ بخش اصلی... ✨");
             triggerGalaxyScene();
         }
 
@@ -780,34 +788,42 @@
             initCinemaGalaxyCanvas();
         }
 
-        // Ultra Romantic Lush Polyphonic Music Engine
+        // Deep Warm & Soothing Romantic Polyphonic Music Engine
         function playLushRomanticMusic() {
             ensureAudio();
-            // Deep Romantic Chord Sequence (Cmaj7 -> Am7 -> Fmaj7 -> G7)
-            const chords = [
-                [261.63, 329.63, 392.00, 493.88], // Cmaj7
-                [220.00, 261.63, 329.63, 392.00], // Am7
-                [174.61, 220.00, 261.63, 329.63], // Fmaj7
-                [196.00, 246.94, 293.66, 349.23]  // G7
+            
+            // Romantic Soft Music Box / Piano Arpeggio Notes (Cmaj7 -> Am7 -> Fmaj7 -> G7)
+            const melodySequence = [
+                523.25, 659.25, 783.99, 1046.50, // Cmaj7 (C5, E5, G5, C6)
+                440.00, 523.25, 659.25, 880.00,  // Am7 (A4, C5, E5, A5)
+                349.23, 440.00, 523.25, 698.46,  // Fmaj7 (F4, A4, C5, F5)
+                392.00, 493.88, 587.33, 783.99   // G7 (G4, B4, D5, G5)
             ];
-            let chordIdx = 0;
+            
+            let noteIdx = 0;
 
             setInterval(() => {
-                let currentChord = chords[chordIdx % chords.length];
-                currentChord.forEach((freq) => {
-                    let osc = audioCtx.createOscillator();
-                    let gain = audioCtx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.value = freq;
-                    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3.5);
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + 3.5);
-                });
-                chordIdx++;
-            }, 3200);
+                let freq = melodySequence[noteIdx % melodySequence.length];
+                
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                
+                // Soft sine wave for piano / music box timbre
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                
+                // Gentle acoustic envelope
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.8);
+                
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.8);
+                
+                noteIdx++;
+            }, 450); // Romantic tempo
         }
 
         // Romantic Quote Rotator
