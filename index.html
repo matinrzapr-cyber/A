@@ -3,31 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>برای دختر کوچولوی من ❤️</title>
+    <title>VIP Access | برای تک‌ستاره من ✨</title>
     <style>
+        :root {
+            --bg-color: #0a0c16;
+            --card-bg: rgba(22, 27, 46, 0.75);
+            --accent-pink: #ff2a6d;
+            --accent-cyan: #05d9e8;
+            --accent-gold: #ffb703;
+            --text-color: #f1f5f9;
+        }
+
         * {
             box-sizing: border-box;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
+
         body, html {
             margin: 0; padding: 0;
             width: 100%; height: 100%;
-            background: #0d0714;
-            color: #fff;
-            font-family: 'Tahoma', 'Vazirmatn', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, 'Vazirmatn', sans-serif;
             overflow: hidden;
         }
 
-        /* Canvas Background */
-        canvas {
+        /* Ambient Canvas Background */
+        canvas#bgCanvas {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 1;
         }
 
-        /* Screens */
+        /* Screen Manager */
         .screen {
             position: absolute;
             top: 0; left: 0;
@@ -38,200 +48,238 @@
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: scale(0.95);
             z-index: 10;
             padding: 20px;
         }
+
         .screen.active {
             opacity: 1;
             visibility: visible;
+            transform: scale(1);
             z-index: 20;
         }
 
-        /* Glassmorphic Box */
+        /* Glassmorphism Card */
         .card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 182, 193, 0.3);
-            padding: 30px 20px;
-            border-radius: 28px;
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 28px 22px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255, 105, 180, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 42, 109, 0.15);
             width: 100%;
-            max-width: 360px;
+            max-width: 380px;
             position: relative;
         }
 
-        h2 { color: #ffb3c6; margin-top: 0; font-size: 1.3rem; }
-        p { color: #e0e0e0; font-size: 0.95rem; line-height: 1.6; }
-
-        /* Custom Buttons */
-        .btn {
-            background: linear-gradient(45deg, #ff3366, #ff758c);
-            border: none;
-            color: white;
-            padding: 13px 28px;
-            font-size: 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-family: inherit;
-            margin-top: 15px;
+        /* Progress Bar Top */
+        .step-indicator {
+            position: absolute;
+            top: 15px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
             font-weight: bold;
         }
-        .btn:active { transform: scale(0.92); }
+
+        h2 {
+            color: #fff;
+            font-size: 1.35rem;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        p {
+            color: #94a3b8;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            background: linear-gradient(135deg, var(--accent-pink), #ff758c);
+            border: none;
+            color: #fff;
+            padding: 14px 28px;
+            font-size: 0.98rem;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 42, 109, 0.35);
+            transition: all 0.2s ease;
+            font-family: inherit;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:active { transform: scale(0.96); }
 
         select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            padding: 10px 14px;
-            border-radius: 14px;
-            font-size: 1rem;
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 0.95rem;
             outline: none;
             font-family: inherit;
-            margin: 5px;
+            margin: 4px;
+            width: 45%;
         }
 
-        /* Dodging Button Container */
-        .dodge-area {
+        /* Lie Detector Scanner */
+        .fingerprint-box {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px dashed var(--accent-cyan);
+            margin: 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.8rem;
+            cursor: pointer;
             position: relative;
-            width: 100%;
-            height: 180px;
-            margin-top: 15px;
+            transition: all 0.3s;
         }
-        #dodge-btn {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #ccc;
-            padding: 10px 20px;
-            border-radius: 20px;
-            transition: all 0.2s ease;
+
+        .fingerprint-box.scanning {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 25px var(--accent-pink);
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+
+        /* Custom Sliders */
+        .slider-group {
+            margin: 18px 0;
+            text-align: right;
+        }
+
+        .slider-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 6px;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: var(--accent-pink);
             cursor: pointer;
         }
 
-        /* Tapping Heart Game */
-        .tap-heart {
-            font-size: 5rem;
-            cursor: pointer;
-            margin: 15px 0;
-            display: inline-block;
-            transition: transform 0.1s ease;
-            filter: drop-shadow(0 0 15px #ff4081);
-        }
-        .progress-bar-bg {
-            width: 100%;
-            height: 18px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .progress-bar-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff4081, #ff758c);
-            transition: width 0.15s ease;
-        }
-
-        /* Mystery Boxes */
-        .boxes-grid {
+        /* Memory Game Cards Grid */
+        .memory-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 15px 0;
         }
-        .gift-box {
+
+        .memory-card {
+            aspect-ratio: 1;
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 182, 193, 0.3);
-            border-radius: 18px;
-            padding: 20px 10px;
-            font-size: 2.2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
             cursor: pointer;
             transition: transform 0.3s, background 0.3s;
         }
-        .gift-box:active { transform: scale(0.9); }
-        .gift-box.opened {
-            background: rgba(255, 105, 180, 0.25);
-            font-size: 0.85rem;
-            color: #fff;
-            padding: 12px 8px;
-            border-color: #ff4081;
+
+        .memory-card.flipped {
+            background: rgba(5, 217, 232, 0.2);
+            border-color: var(--accent-cyan);
         }
 
-        /* Final Stars */
-        .star {
+        .memory-card.matched {
+            background: rgba(255, 42, 109, 0.3);
+            border-color: var(--accent-pink);
+            cursor: default;
+        }
+
+        /* Wheel of Fortune */
+        .wheel-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 15px auto;
+        }
+
+        canvas#wheelCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .wheel-pointer {
             position: absolute;
-            font-size: 1.8rem;
-            cursor: pointer;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
             z-index: 30;
-            filter: drop-shadow(0 0 12px #ff69b4);
-            animation: float 3s ease-in-out infinite alternate;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-12px); }
+            filter: drop-shadow(0 2px 5px #000);
         }
 
-        #envelope {
-            position: absolute;
-            bottom: 40px;
-            font-size: 3.5rem;
-            cursor: pointer;
-            z-index: 30;
-            animation: bounce 2s infinite;
-            filter: drop-shadow(0 0 20px #ff4081);
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-18px); }
-        }
-
-        /* Modal Popups */
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             z-index: 500;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
+
         .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            color: #111;
+            background: #121629;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #f1f5f9;
             padding: 25px;
-            border-radius: 24px;
-            max-width: 88%;
-            width: 380px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
             text-align: justify;
             line-height: 1.8;
-            box-shadow: 0 10px 30px rgba(255,105,180,0.5);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
         }
+
         .close-btn {
             position: absolute;
             top: 12px; left: 16px;
-            font-size: 1.6rem; cursor: pointer; color: #666;
+            font-size: 1.5rem; cursor: pointer; color: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <!-- Particle Background -->
     <canvas id="bgCanvas"></canvas>
 
-    <!-- STEP 1: Lock Screen -->
-    <div id="step-lock" class="screen active">
+    <!-- STEP 1: VIP Verification -->
+    <div id="step-1" class="screen active">
         <div class="card">
-            <h2>تاریخ آشناییمون رو بزن ببینم یادته؟ 🧐✨</h2>
+            <div class="step-indicator">مرحله ۱ از ۵</div>
+            <h2>احراز هویت سیستم VIP 🔒</h2>
+            <p>برای دسترسی به اطلاعات محرمانه قلب، تاریخ آشنایی را وارد کنید:</p>
             <div>
                 <select id="daySelect"></select>
                 <select id="monthSelect">
@@ -249,73 +297,96 @@
                     <option value="اسفند">اسفند</option>
                 </select>
             </div>
-            <button class="btn" onclick="checkDate()">ورود 💖</button>
-            <p id="error-msg" style="color:#ff5252; display:none; margin-top:12px; font-size:0.85rem;">
-                😭💔 عاااخه بچهههه چطور یادت نیست؟! دوباره فکر کن!
+            <button class="btn" onclick="verifyStep1()">تأیید و ورود 😎</button>
+            <p id="err-1" style="color:#ff2a6d; display:none; margin-top:12px; font-size:0.85rem;">
+                🚨 خطای ۴۰۴: دسترسی ناموفق! مگه میشه یادت نباشه؟! دوباره بزن 💔
             </p>
         </div>
     </div>
 
-    <!-- STEP 2: The Dodging Button Game -->
-    <div id="step-dodge" class="screen">
+    <!-- STEP 2: Lie Detector Test -->
+    <div id="step-2" class="screen">
         <div class="card">
-            <h2>سوال مرحله اول 🤔</h2>
-            <p>راستشو بگو... چقدر منو دوست داری؟ 😜</p>
-            <div class="dodge-area">
-                <button class="btn" style="position: absolute; right: 10px; top: 20px;" onclick="nextStepFromDodge()">تا آسمون و ستاره‌ها! 🥰</button>
-                <button id="dodge-btn" style="left: 10px; top: 100px;" onmouseover="dodgeMe()" onclick="dodgeMe()" ontouchstart="dodgeMe()">یکم... 🤏</button>
+            <div class="step-indicator">مرحله ۲ از ۵</div>
+            <h2>تست دروغ‌سنج هوشمند 🕵️‍♂️</h2>
+            <p id="lie-q-text">سوال ۱: خدایی کی موقع غذا خوردن لوس‌تره و ناز داره؟ 🍔</p>
+            
+            <div class="fingerprint-box" id="scannerBox" onclick="runLieDetector()">
+                <span>👆</span>
             </div>
+            <p style="font-size:0.8rem; color:#64748b; margin-bottom:10px;">روی اثر انگشت لمس کن تا آنالیز بشه!</p>
+
+            <div id="lie-result" style="display:none; color:var(--accent-cyan); font-weight:bold; margin-top:10px;"></div>
+            <button class="btn" id="nextLieBtn" style="display:none;" onclick="nextLieQuestion()">سوال بعدی ➡️</button>
         </div>
     </div>
 
-    <!-- STEP 3: Tapping Heart Power-Up Game -->
-    <div id="step-tap" class="screen">
+    <!-- STEP 3: Mood Calibrator -->
+    <div id="step-3" class="screen">
         <div class="card">
-            <h2>مرحله دوم: شارژر باتری قلب ⚡</h2>
-            <p>باتری قلب من تموم شده! سریع تپ کن روی قلب تا شارژ بشه!</p>
-            <div class="tap-heart" id="pumpingHeart" onclick="tapHeart()">💓</div>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="heartProgress"></div>
+            <div class="step-indicator">مرحله ۳ از ۵</div>
+            <h2>تنظیمات و کالیبراسیون اخلاق 🎛️</h2>
+            <p>مقادیر زیر را جهت بهینه‌سازی رابطه تنظیم کنید:</p>
+
+            <div class="slider-group">
+                <label>درجه لوس شدن و ناز کردن (٪)</label>
+                <input type="range" min="0" max="100" value="50" oninput="updateSlider1(this.value)">
+                <span id="s1-val" style="font-size:0.8rem; color:var(--accent-pink);">۵۰٪</span>
             </div>
-            <p id="progressText" style="font-size: 0.85rem; color: #ffb3c6; margin-top: 8px;">شارژ: ۰٪</p>
+
+            <div class="slider-group">
+                <label>حق با شما بودن در تمام بحث‌ها (٪)</label>
+                <input type="range" min="0" max="100" value="100" oninput="updateSlider2(this.value)">
+                <span id="s2-val" style="font-size:0.8rem; color:var(--accent-cyan);">۱۰۰٪ (همیشه حق با شماست!)</span>
+            </div>
+
+            <div class="slider-group">
+                <label>میزان دلتنگی وقتی نیستی</label>
+                <input type="range" min="0" max="100" value="80" oninput="updateSlider3(this.value)">
+                <span id="s3-val" style="font-size:0.8rem; color:var(--accent-gold);">۸۰٪</span>
+            </div>
+
+            <button class="btn" onclick="goToStep(4)">اعمال تنظیمات و مرحله بعد 🚀</button>
         </div>
     </div>
 
-    <!-- STEP 4: Mystery Vouchers Game -->
-    <div id="step-vouchers" class="screen">
+    <!-- STEP 4: Memory Match Game -->
+    <div id="step-4" class="screen">
         <div class="card">
-            <h2>مرحله سوم: گردونه آرزوها 🎁</h2>
-            <p>۳ تا کادو انتخاب کن و کوپن‌هاتو جایزه بگیر!</p>
-            <div class="boxes-grid">
-                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن یک شام با غذا و خوراکی دلخواهت به حساب من!')">🎁</div>
-                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن یک ماساژ اختصاصی و ناز کشیدن بی‌شرط!')">🎁</div>
-                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن حق انتخاب تمام‌عیار فیلم بعدی که می‌بینیم!')">🎁</div>
-                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن یک بغل محکم و طولانی هروقت کلافه بودی!')">🎁</div>
+            <div class="step-indicator">مرحله ۴ از ۵</div>
+            <h2>تست حافظه و جفت‌سازی کارت‌ها 🃏</h2>
+            <p>تمام جفت‌های مشابه را پیدا کنید تا مرحله بعد باز شود:</p>
+
+            <div class="memory-grid" id="memoryGrid"></div>
+
+            <button class="btn" id="memoryNextBtn" style="display:none;" onclick="goToStep(5)">مرحله نهایی: گردونه شانس 🎰</button>
+        </div>
+    </div>
+
+    <!-- STEP 5: Wheel of Fortune -->
+    <div id="step-5" class="screen">
+        <div class="card">
+            <div class="step-indicator">مرحله ۵ از ۵</div>
+            <h2>گردونه شانس و جایزه‌های دونفره 🎰</h2>
+            <p>دکمه چرخش را بزنید تا جایزه شما مشخص شود!</p>
+
+            <div class="wheel-container">
+                <div class="wheel-pointer">🔻</div>
+                <canvas id="wheelCanvas" width="220" height="220"></canvas>
             </div>
-            <button class="btn" id="finishVouchersBtn" style="display:none;" onclick="showFinalScreen()">دریافت جایزه نهایی 💌</button>
+
+            <button class="btn" id="spinBtn" onclick="spinWheel()">بچرخون! 🎡</button>
+            <p id="wheelResult" style="color:var(--accent-gold); font-weight:bold; margin-top:10px; display:none;"></p>
+            <button class="btn" id="finalRewardBtn" style="display:none; background:linear-gradient(135deg, var(--accent-cyan), #00b4d8);" onclick="showFinalModal()">مشاهده نامه و جایزه نهایی 💌</button>
         </div>
     </div>
 
-    <!-- STEP 5: Final Reward Screen -->
-    <div id="step-final" class="screen">
-        <div id="starsContainer"></div>
-        <div id="envelope" onclick="openModal('letterModal')">💌</div>
-    </div>
-
-    <!-- Modal for Star Messages -->
-    <div id="starModal" class="modal">
-        <div class="modal-content" style="text-align: center; color: #d10056; font-weight: bold;">
-            <span class="close-btn" onclick="closeModal('starModal')">&times;</span>
-            <p id="starText" style="font-size: 1.1rem;"></p>
-        </div>
-    </div>
-
-    <!-- Modal for Main Letter -->
-    <div id="letterModal" class="modal">
+    <!-- FINAL MODAL: Letter -->
+    <div id="finalModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('letterModal')">&times;</span>
-            <h2 style="text-align:center; color:#d10056;">عاشقتم ❤️</h2>
-            <h3 style="text-align:center; color:#d10056;">دختر کوچولو 💗،</h3>
+            <span class="close-btn" onclick="closeModal('finalModal')">&times;</span>
+            <h2 style="text-align:center; color:var(--accent-pink);">عاشقتم ❤️</h2>
+            <h3 style="text-align:center; color:var(--accent-cyan);">دختر کوچولوی من 💗</h3>
             <p>آدم‌هایی هستند که وارد زندگی‌مان می‌شوند و بدون هیچ ردپایی می‌روند، اما تو به شکلی متفاوت آمدی. رفته‌رفته به فردی نادیده‌نشدنی و ضروری در زندگی‌ام تبدیل شدی. این فقط به خاطر لحظات قشنگ یا حرف‌های شیرین نبود، بلکه چون حواسش را هم نداشتی اما باعث شدی خیلی از روزهای من بهتر شوند. از وقتی پیدا شدی، فهمیدم دوست داشتن را می‌شود در جزئیات کوچک حس کرد؛ در یک گفتگوی معمولی، در یک خنده مشترک، یا فقط در همین که بدانم هستی.</p>
             <p>نمی‌دانم آینده چه چیزی برایمان دارد، اما این را خوب می‌دانم که تا وقتی کنار هم راه می‌رویم، می‌خواهم به ساختن خاطرات، حمایت از هدف‌هایت، جشن گرفتن موفقیت‌هایت و آغوش کشیدنت وقتی همه‌چیز خسته‌کننده می‌شود ادامه دهم. تو فرد بسیار مهمی برای من هستی و از ته دل امیدوارم هیچ‌وقت فراموش نکنی چقدر باارزشی و چقدر برایم اهمیت داری.</p>
             <p>می‌خواهم بدانی که تو را دقیقاً همان‌طور که هستی تحسین می‌کنم؛ با تمام ویژگی‌های خوبت، نقص‌هایت، روزهای خوبت و روزهایی که چندان روبه‌راه نیستی. هیچ‌کس کامل نیست و دقیقاً همین است که به عشق معنا می‌دهد: انتخابِ ماندن، حتی زمانی که اوضاع آسان نیست. ممنونم بابت هر خاطره‌ای که با هم ساختیم، بابت هر لحظه‌ای که لبخند به لبم آوردی و بابت اینکه اجازه دادی بخشی از زندگیت باشم.</p>
@@ -323,57 +394,54 @@
     </div>
 
     <script>
-        // Web Audio Synthesizer (No external audio files needed!)
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        // Web Audio Sound Effects Synthesizer
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
-        function initAudio() {
-            if (!audioCtx) audioCtx = new AudioContext();
-        }
-
-        function playPopSound() {
-            initAudio();
+        function playSound(type) {
+            if (!audioCtx) audioCtx = new AudioCtx();
             let osc = audioCtx.createOscillator();
             let gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.08);
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
             osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
-        }
 
-        function playBoingSound() {
-            initAudio();
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(120, audioCtx.currentTime + 0.15);
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.15);
-        }
-
-        function playWinSound() {
-            initAudio();
-            const notes = [523.25, 659.25, 783.99, 1046.50];
-            notes.forEach((freq, idx) => {
-                let osc = audioCtx.createOscillator();
-                let gain = audioCtx.createGain();
+            if (type === 'pop') {
                 osc.type = 'sine';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.25, audioCtx.currentTime + idx * 0.1);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.1 + 0.25);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + idx * 0.1);
-                osc.stop(audioCtx.currentTime + idx * 0.1 + 0.25);
-            });
+                osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+            } else if (type === 'win') {
+                [523, 659, 783, 1046].forEach((f, i) => {
+                    let o = audioCtx.createOscillator();
+                    let g = audioCtx.createGain();
+                    o.connect(g); g.connect(audioCtx.destination);
+                    o.frequency.value = f;
+                    g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.1);
+                    g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.1 + 0.2);
+                    o.start(audioCtx.currentTime + i * 0.1);
+                    o.stop(audioCtx.currentTime + i * 0.1 + 0.2);
+                });
+            } else if (type === 'err') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+                osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+            }
         }
 
-        // Date Select Setup
+        // Screen Navigation
+        function goToStep(stepNum) {
+            playSound('pop');
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(`step-${stepNum}`).classList.add('active');
+            if (stepNum === 4) initMemoryGame();
+            if (stepNum === 5) drawWheel();
+        }
+
+        // Step 1 Setup & Verification
         const daySelect = document.getElementById('daySelect');
         for (let i = 1; i <= 31; i++) {
             let opt = document.createElement('option');
@@ -381,150 +449,216 @@
             daySelect.appendChild(opt);
         }
 
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        // STEP 1 Logic
-        function checkDate() {
-            const day = daySelect.value;
-            const month = document.getElementById('monthSelect').value;
-            if (day === "21" && month === "اردیبهشت") {
-                playWinSound();
-                showScreen('step-dodge');
+        function verifyStep1() {
+            const d = daySelect.value;
+            const m = document.getElementById('monthSelect').value;
+            if (d === "21" && m === "اردیبهشت") {
+                playSound('win');
+                goToStep(2);
             } else {
-                playBoingSound();
-                document.getElementById('error-msg').style.display = 'block';
+                playSound('err');
+                document.getElementById('err-1').style.display = 'block';
             }
         }
 
-        // STEP 2 Dodging Button Logic
-        function dodgeMe() {
-            playBoingSound();
-            const btn = document.getElementById('dodge-btn');
-            const x = Math.random() * 180 - 90;
-            const y = Math.random() * 120 - 60;
-            btn.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        function nextStepFromDodge() {
-            playWinSound();
-            showScreen('step-tap');
-        }
-
-        // STEP 3 Tapping Heart Logic
-        let tapCount = 0;
-        const maxTaps = 15;
-        function tapHeart() {
-            playPopSound();
-            tapCount++;
-            const heart = document.getElementById('pumpingHeart');
-            const fill = document.getElementById('heartProgress');
-            const text = document.getElementById('progressText');
-
-            heart.style.transform = `scale(${1 + tapCount * 0.04})`;
-            let pct = Math.min(100, Math.round((tapCount / maxTaps) * 100));
-            fill.style.width = pct + '%';
-            text.innerText = `شارژ: ${pct}٪`;
-
-            if (tapCount >= maxTaps) {
-                playWinSound();
-                text.innerText = "💥 شارژ کامل! انفجار عشق! 💖";
-                setTimeout(() => showScreen('step-vouchers'), 1000);
-            }
-        }
-
-        // STEP 4 Mystery Boxes Logic
-        let openedCount = 0;
-        function openBox(element, voucherText) {
-            if (element.classList.contains('opened')) return;
-            playPopSound();
-            element.classList.add('opened');
-            element.innerText = voucherText;
-            openedCount++;
-
-            if (openedCount >= 3) {
-                playWinSound();
-                document.getElementById('finishVouchersBtn').style.display = 'inline-block';
-            }
-        }
-
-        // STEP 5 Final Stars Logic
-        const starMessages = [
-            "ستاره ۱: اولین باری که دیدمت، بهترین روز زندگیم شد ✨",
-            "ستاره ۲: لبخندت قشنگ‌ترین تصویر دنیاست 💖",
-            "ستاره ۳: ممنونم که همیشه کنارمی 🌸",
-            "ستاره ۴: صدای تو آرامش‌بخش‌ترین آهنگ منه 🎶",
-            "ستاره ۵: با تو همه چیز قشنگ‌تره 🌷",
-            "ستاره ۶: تو مهربون‌ترین آدمی هستی که می‌شناسم 💕",
-            "ستاره ۷: مرسی که هستی و دنیامو روشن می‌کنی 🌟",
-            "ستاره ۸: چشمات تمام دنیای منه 👀❤️",
-            "ستاره ۹: هر روز بیشتر از دیروز دوستت دارم 💘",
-            "ستاره ۱۰: همیشه و همه‌جا قلباً پیشتم 💍"
+        // Step 2 Lie Detector Logic
+        const lieQuestions = [
+            { q: "سوال ۱: خدایی کی موقع غذا خوردن لوس‌تره و ناز داره؟ 🍔", res: "🔍 اسکن انجام شد: نتیجه اسکن نشون میده ۱۰۰٪ تویی! 😜" },
+            { q: "سوال ۲: وقتی میگی 'باشه اصلاً هرچی تو بگی'، منظورت چیه؟ 🧐", res: "🔍 نتایج آنالیز: یعنی تهش باید کار خودتو بکنی! 😎" },
+            { q: "سوال ۳: چقدر موقع قهر کردن دلت میخواد بیام نازتو بکشم؟ 🥰", res: "🔍 اسکن قلب: بی‌نهایت درصد! اصلاً قهر می‌کنی که ناز بکشم ❤️" }
         ];
+        let currentLieIdx = 0;
 
-        function showFinalScreen() {
-            showScreen('step-final');
-            const container = document.getElementById('starsContainer');
-            container.innerHTML = '';
-            const positions = [
-                { top: '12%', left: '15%' }, { top: '22%', left: '78%' },
-                { top: '38%', left: '12%' }, { top: '58%', left: '82%' },
-                { top: '72%', left: '18%' }, { top: '18%', left: '48%' },
-                { top: '78%', left: '68%' }, { top: '48%', left: '88%' },
-                { top: '62%', left: '8%'  }, { top: '32%', left: '68%' }
-            ];
+        function runLieDetector() {
+            const box = document.getElementById('scannerBox');
+            const res = document.getElementById('lie-result');
+            box.classList.add('scanning');
+            playSound('pop');
 
-            starMessages.forEach((msg, index) => {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.innerHTML = '⭐';
-                star.style.top = positions[index].top;
-                star.style.left = positions[index].left;
-                star.onclick = () => {
-                    playPopSound();
-                    document.getElementById('starText').innerText = msg;
-                    openModal('starModal');
-                };
-                container.appendChild(star);
+            setTimeout(() => {
+                box.classList.remove('scanning');
+                playSound('win');
+                res.innerText = lieQuestions[currentLieIdx].res;
+                res.style.display = 'block';
+                document.getElementById('nextLieBtn').style.display = 'block';
+            }, 1200);
+        }
+
+        function nextLieQuestion() {
+            currentLieIdx++;
+            if (currentLieIdx < lieQuestions.length) {
+                document.getElementById('lie-q-text').innerText = lieQuestions[currentLieIdx].q;
+                document.getElementById('lie-result').style.display = 'none';
+                document.getElementById('nextLieBtn').style.display = 'none';
+            } else {
+                goToStep(3);
+            }
+        }
+
+        // Step 3 Sliders Logic
+        function updateSlider1(v) {
+            document.getElementById('s1-val').innerText = v + '%';
+        }
+        function updateSlider2(v) {
+            document.getElementById('s2-val').innerText = '۱۰۰٪ (تأیید شد، همیشه حق با شماست!)';
+        }
+        function updateSlider3(v) {
+            if (v > 90) document.getElementById('s3-val').innerText = '⚠️ خطا: میزان دلتنگی از بینهایت گذشت!';
+            else document.getElementById('s3-val').innerText = v + '%';
+        }
+
+        // Step 4 Memory Game Logic
+        const icons = ['🎬', '☕', '🍟', '👑', '🎬', '☕', '🍟', '👑'];
+        let flippedCards = [];
+        let matchedCount = 0;
+
+        function initMemoryGame() {
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            flippedCards = [];
+            matchedCount = 0;
+            let shuffled = [...icons].sort(() => Math.random() - 0.5);
+
+            shuffled.forEach((icon, idx) => {
+                let card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.icon = icon;
+                card.dataset.index = idx;
+                card.onclick = () => flipCard(card);
+                grid.appendChild(card);
             });
         }
 
-        function openModal(id) {
-            playPopSound();
-            document.getElementById(id).style.display = 'flex';
-        }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function flipCard(card) {
+            if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length === 2) return;
+            playSound('pop');
+            card.classList.add('flipped');
+            card.innerText = card.dataset.icon;
+            flippedCards.push(card);
 
-        // Particles Animation (Background)
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        let width = canvas.width = window.innerWidth;
-        let height = canvas.height = window.innerHeight;
+            if (flippedCards.length === 2) {
+                if (flippedCards[0].dataset.icon === flippedCards[1].dataset.icon) {
+                    playSound('win');
+                    flippedCards[0].classList.add('matched');
+                    flippedCards[1].classList.add('matched');
+                    flippedCards = [];
+                    matchedCount += 2;
+                    if (matchedCount === icons.length) {
+                        document.getElementById('memoryNextBtn').style.display = 'block';
+                    }
+                } else {
+                    setTimeout(() => {
+                        flippedCards[0].classList.remove('flipped');
+                        flippedCards[1].classList.remove('flipped');
+                        flippedCards[0].innerText = '';
+                        flippedCards[1].innerText = '';
+                        flippedCards = [];
+                    }, 800);
+                }
+            }
+        }
+
+        // Step 5 Wheel of Fortune Logic
+        const segments = [
+            "🍟 پیتزا و سیب‌زمینی",
+            "💆‍♀️ ۱ ساعت ماساژ",
+            "👑 ۵ بار دستور دادن",
+            "🎬 انتخاب فیلم شب",
+            "🏆 مالکیت ۱۰۰٪ قلب من"
+        ];
+        const colors = ['#ff2a6d', '#05d9e8', '#ffb703', '#7209b7', '#4cc9f0'];
+
+        function drawWheel() {
+            const canvas = document.getElementById('wheelCanvas');
+            const ctx = canvas.getContext('2d');
+            const arc = (Math.PI * 2) / segments.length;
+
+            for (let i = 0; i < segments.length; i++) {
+                ctx.beginPath();
+                ctx.fillStyle = colors[i];
+                ctx.moveTo(110, 110);
+                ctx.arc(110, 110, 110, i * arc, (i + 1) * arc);
+                ctx.fill();
+
+                ctx.save();
+                ctx.translate(110, 110);
+                ctx.rotate(i * arc + arc / 2);
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 10px Tahoma";
+                ctx.fillText(segments[i], 30, 4);
+                ctx.restore();
+            }
+        }
+
+        let isSpinning = false;
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            playSound('pop');
+
+            const canvas = document.getElementById('wheelCanvas');
+            let rotation = 0;
+            let targetRotation = 1440 + Math.random() * 360; 
+            let start = null;
+
+            function animate(timestamp) {
+                if (!start) start = timestamp;
+                let progress = timestamp - start;
+                let easeOut = 1 - Math.pow(1 - Math.min(progress / 4000, 1), 3);
+                rotation = easeOut * targetRotation;
+                canvas.style.transform = `rotate(${rotation}deg)`;
+
+                if (progress < 4000) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isSpinning = false;
+                    playSound('win');
+                    document.getElementById('wheelResult').innerText = "🎉 مبارکه! شما برنده جایزه: «مالکیت ۱۰۰٪ قلب من» شدید!";
+                    document.getElementById('wheelResult').style.display = 'block';
+                    document.getElementById('finalRewardBtn').style.display = 'block';
+                    document.getElementById('spinBtn').style.display = 'none';
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function showFinalModal() {
+            playSound('pop');
+            document.getElementById('finalModal').style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Ambient Background Particle Physics
+        const bgCanvas = document.getElementById('bgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        let width = bgCanvas.width = window.innerWidth;
+        let height = bgCanvas.height = window.innerHeight;
 
         window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            width = bgCanvas.width = window.innerWidth;
+            height = bgCanvas.height = window.innerHeight;
         });
 
-        const particles = Array.from({ length: 45 }, () => ({
+        const particles = Array.from({ length: 35 }, () => ({
             x: Math.random() * width,
             y: Math.random() * height,
-            size: Math.random() * 3 + 1,
-            speedY: Math.random() * 0.8 + 0.2,
-            opacity: Math.random() * 0.7 + 0.3
+            r: Math.random() * 2 + 1,
+            sy: Math.random() * 0.5 + 0.2,
+            opacity: Math.random() * 0.5 + 0.2
         }));
 
         function animateBg() {
-            ctx.clearRect(0, 0, width, height);
+            bgCtx.clearRect(0, 0, width, height);
             particles.forEach(p => {
-                p.y -= p.speedY;
+                p.y -= p.sy;
                 if (p.y < 0) p.y = height;
-                ctx.fillStyle = `rgba(255, 182, 193, ${p.opacity})`;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
+                bgCtx.fillStyle = `rgba(5, 217, 232, ${p.opacity})`;
+                bgCtx.beginPath();
+                bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                bgCtx.fill();
             });
             requestAnimationFrame(animateBg);
         }
