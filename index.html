@@ -2,667 +2,469 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>VIP Access | برای تک‌ستاره من ✨</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>یک غافلگیری خاص ❤️</title>
+    <!-- فونت وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- کتابخانه Three.js برای ساخت ماه ۳ بعدی -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        :root {
-            --bg-color: #0a0c16;
-            --card-bg: rgba(22, 27, 46, 0.75);
-            --accent-pink: #ff2a6d;
-            --accent-cyan: #05d9e8;
-            --accent-gold: #ffb703;
-            --text-color: #f1f5f9;
-        }
-
         * {
             box-sizing: border-box;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', Tahoma, 'Vazirmatn', sans-serif;
-            overflow: hidden;
-        }
-
-        /* Ambient Canvas Background */
-        canvas#bgCanvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-        }
-
-        /* Screen Manager */
-        .screen {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+        body {
+            background: linear-gradient(135deg, #0d0d2b, #2a0845);
+            color: #fff;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            transform: scale(0.95);
-            z-index: 10;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .screen.active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-            z-index: 20;
-        }
-
-        /* Glassmorphism Card */
         .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 24px;
-            padding: 28px 22px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 42, 109, 0.15);
-            width: 100%;
-            max-width: 380px;
-            position: relative;
-        }
-
-        /* Progress Bar Top */
-        .step-indicator {
-            position: absolute;
-            top: 15px;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            font-weight: bold;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transition: all 0.5s ease;
         }
 
         h2 {
-            color: #fff;
-            font-size: 1.35rem;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        p {
-            color: #94a3b8;
-            font-size: 0.92rem;
-            line-height: 1.6;
             margin-bottom: 20px;
+            color: #ff79c6;
         }
 
-        /* Buttons */
-        .btn {
-            background: linear-gradient(135deg, var(--accent-pink), #ff758c);
-            border: none;
-            color: #fff;
-            padding: 14px 28px;
-            font-size: 0.98rem;
-            border-radius: 14px;
-            cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 42, 109, 0.35);
-            transition: all 0.2s ease;
-            font-family: inherit;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .btn:active { transform: scale(0.96); }
-
-        select {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            outline: none;
-            font-family: inherit;
-            margin: 4px;
-            width: 45%;
-        }
-
-        /* Lie Detector Scanner */
-        .fingerprint-box {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            border: 2px dashed var(--accent-cyan);
-            margin: 15px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.8rem;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s;
-        }
-
-        .fingerprint-box.scanning {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 25px var(--accent-pink);
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
-
-        /* Custom Sliders */
-        .slider-group {
-            margin: 18px 0;
-            text-align: right;
-        }
-
-        .slider-group label {
+        .btn-option {
             display: block;
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            margin-bottom: 6px;
-        }
-
-        input[type=range] {
             width: 100%;
-            accent-color: var(--accent-pink);
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            border-radius: 12px;
             cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
         }
 
-        /* Memory Game Cards Grid */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 15px 0;
+        .btn-option:hover {
+            background: #ff79c6;
+            color: #000;
+            font-weight: bold;
         }
 
-        .memory-card {
-            aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
+        .hidden {
+            display: none !important;
+        }
+
+        /* استایل نامه */
+        .letter-text {
+            line-height: 1.8;
+            font-size: 17px;
+            text-align: justify;
+            margin-bottom: 25px;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* دکمه‌های آره و نه */
+        .feedback-btns {
             display: flex;
             justify-content: center;
-            align-items: center;
-            font-size: 1.6rem;
-            cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
-        }
-
-        .memory-card.flipped {
-            background: rgba(5, 217, 232, 0.2);
-            border-color: var(--accent-cyan);
-        }
-
-        .memory-card.matched {
-            background: rgba(255, 42, 109, 0.3);
-            border-color: var(--accent-pink);
-            cursor: default;
-        }
-
-        /* Wheel of Fortune */
-        .wheel-container {
+            gap: 20px;
+            margin-top: 20px;
             position: relative;
-            width: 220px;
-            height: 220px;
-            margin: 15px auto;
+            min-height: 60px;
         }
 
-        canvas#wheelCanvas {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        .btn-action {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s ease;
         }
 
-        .wheel-pointer {
+        #yes-btn {
+            background-color: #2ecc71;
+            color: white;
             position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1.5rem;
-            z-index: 30;
-            filter: drop-shadow(0 2px 5px #000);
+            right: 20%;
         }
 
-        /* Modals */
+        #no-btn {
+            background-color: #e74c3c;
+            color: white;
+            position: absolute;
+            left: 20%;
+        }
+
+        /* پاپ آپ شوخی */
         .modal {
-            display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            z-index: 500;
+            background: rgba(0,0,0,0.8);
+            display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            z-index: 100;
         }
 
         .modal-content {
-            background: #121629;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #f1f5f9;
-            padding: 25px;
+            background: #1e1e38;
+            padding: 30px;
             border-radius: 20px;
+            border: 2px solid #ff79c6;
             max-width: 400px;
-            width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            text-align: justify;
-            line-height: 1.8;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            text-align: center;
+            animation: popIn 0.3s ease-out;
         }
 
-        .close-btn {
+        @keyframes popIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* بخش کهکشان */
+        #galaxy-container {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000;
+            z-index: 200;
+            overflow: hidden;
+        }
+
+        .galaxy-header {
             position: absolute;
-            top: 12px; left: 16px;
-            font-size: 1.5rem; cursor: pointer; color: #64748b;
+            top: 30px;
+            width: 100%;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 15px #ff79c6, 0 0 30px #ff79c6;
+            z-index: 210;
+            pointer-events: none;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff79c6; }
+            to { text-shadow: 0 0 25px #ff79c6, 0 0 40px #ff92d0; }
+        }
+
+        .galaxy-fact {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            font-size: 16px;
+            color: #e0e0e0;
+            z-index: 210;
+            transition: opacity 1s ease;
+        }
+
+        #moon-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        audio {
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bgCanvas"></canvas>
+    <!-- ۱. بخش بازی/سوالات -->
+    <div id="quiz-card" class="card">
+        <h2 id="question-text">در حال بارگذاری سوال...</h2>
+        <div id="options-container"></div>
+    </div>
 
-    <!-- STEP 1: VIP Verification -->
-    <div id="step-1" class="screen active">
-        <div class="card">
-            <div class="step-indicator">مرحله ۱ از ۵</div>
-            <h2>احراز هویت سیستم VIP 🔒</h2>
-            <p>برای دسترسی به اطلاعات محرمانه قلب، تاریخ آشنایی را وارد کنید:</p>
-            <div>
-                <select id="daySelect"></select>
-                <select id="monthSelect">
-                    <option value="فروردین">فروردین</option>
-                    <option value="اردیبهشت">اردیبهشت</option>
-                    <option value="خرداد">خرداد</option>
-                    <option value="تیر">تیر</option>
-                    <option value="مرداد">مرداد</option>
-                    <option value="شهریور">شهریور</option>
-                    <option value="مهر">مهر</option>
-                    <option value="آبان">آبان</option>
-                    <option value="آذر">آذر</option>
-                    <option value="دی">دی</option>
-                    <option value="بهمن">بهمن</option>
-                    <option value="اسفند">اسفند</option>
-                </select>
-            </div>
-            <button class="btn" onclick="verifyStep1()">تأیید و ورود 😎</button>
-            <p id="err-1" style="color:#ff2a6d; display:none; margin-top:12px; font-size:0.85rem;">
-                🚨 خطای ۴۰۴: دسترسی ناموفق! مگه میشه یادت نباشه؟! دوباره بزن 💔
-            </p>
+    <!-- ۲. بخش نامه عاشقانه -->
+    <div id="letter-card" class="card hidden">
+        <h2>نامه ای برای تو ❤️</h2>
+        <div class="letter-text" id="letter-content">
+            <!-- متن نامه شما در اینجا قرار می گیرد -->
+            آلمای قشنگم،<br><br>
+            از وقتی تو وارد زندگیم شدی، همه چیز رنگ و بوی دیگه‌ای گرفته. تو مثل یه نور توی تاریکی هستی و هر روز بودن با تو برام مثل یه معجزه‌ست. این بازی کوچولو فقط یه بهانه بود تا بهت بگم چقدر برام باارزشی و چقدر دوستت دارم...✨
+        </div>
+        
+        <h3>خوشت اومد از این بازی؟ 😉</h3>
+        
+        <div class="feedback-btns">
+            <button id="yes-btn" class="btn-action">آره 😍</button>
+            <button id="no-btn" class="btn-action">نه 😜</button>
         </div>
     </div>
 
-    <!-- STEP 2: Lie Detector Test -->
-    <div id="step-2" class="screen">
-        <div class="card">
-            <div class="step-indicator">مرحله ۲ از ۵</div>
-            <h2>تست دروغ‌سنج هوشمند 🕵️‍♂️</h2>
-            <p id="lie-q-text">سوال ۱: خدایی کی موقع غذا خوردن لوس‌تره و ناز داره؟ 🍔</p>
-            
-            <div class="fingerprint-box" id="scannerBox" onclick="runLieDetector()">
-                <span>👆</span>
-            </div>
-            <p style="font-size:0.8rem; color:#64748b; margin-bottom:10px;">روی اثر انگشت لمس کن تا آنالیز بشه!</p>
-
-            <div id="lie-result" style="display:none; color:var(--accent-cyan); font-weight:bold; margin-top:10px;"></div>
-            <button class="btn" id="nextLieBtn" style="display:none;" onclick="nextLieQuestion()">سوال بعدی ➡️</button>
-        </div>
-    </div>
-
-    <!-- STEP 3: Mood Calibrator -->
-    <div id="step-3" class="screen">
-        <div class="card">
-            <div class="step-indicator">مرحله ۳ از ۵</div>
-            <h2>تنظیمات و کالیبراسیون اخلاق 🎛️</h2>
-            <p>مقادیر زیر را جهت بهینه‌سازی رابطه تنظیم کنید:</p>
-
-            <div class="slider-group">
-                <label>درجه لوس شدن و ناز کردن (٪)</label>
-                <input type="range" min="0" max="100" value="50" oninput="updateSlider1(this.value)">
-                <span id="s1-val" style="font-size:0.8rem; color:var(--accent-pink);">۵۰٪</span>
-            </div>
-
-            <div class="slider-group">
-                <label>حق با شما بودن در تمام بحث‌ها (٪)</label>
-                <input type="range" min="0" max="100" value="100" oninput="updateSlider2(this.value)">
-                <span id="s2-val" style="font-size:0.8rem; color:var(--accent-cyan);">۱۰۰٪ (همیشه حق با شماست!)</span>
-            </div>
-
-            <div class="slider-group">
-                <label>میزان دلتنگی وقتی نیستی</label>
-                <input type="range" min="0" max="100" value="80" oninput="updateSlider3(this.value)">
-                <span id="s3-val" style="font-size:0.8rem; color:var(--accent-gold);">۸۰٪</span>
-            </div>
-
-            <button class="btn" onclick="goToStep(4)">اعمال تنظیمات و مرحله بعد 🚀</button>
-        </div>
-    </div>
-
-    <!-- STEP 4: Memory Match Game -->
-    <div id="step-4" class="screen">
-        <div class="card">
-            <div class="step-indicator">مرحله ۴ از ۵</div>
-            <h2>تست حافظه و جفت‌سازی کارت‌ها 🃏</h2>
-            <p>تمام جفت‌های مشابه را پیدا کنید تا مرحله بعد باز شود:</p>
-
-            <div class="memory-grid" id="memoryGrid"></div>
-
-            <button class="btn" id="memoryNextBtn" style="display:none;" onclick="goToStep(5)">مرحله نهایی: گردونه شانس 🎰</button>
-        </div>
-    </div>
-
-    <!-- STEP 5: Wheel of Fortune -->
-    <div id="step-5" class="screen">
-        <div class="card">
-            <div class="step-indicator">مرحله ۵ از ۵</div>
-            <h2>گردونه شانس و جایزه‌های دونفره 🎰</h2>
-            <p>دکمه چرخش را بزنید تا جایزه شما مشخص شود!</p>
-
-            <div class="wheel-container">
-                <div class="wheel-pointer">🔻</div>
-                <canvas id="wheelCanvas" width="220" height="220"></canvas>
-            </div>
-
-            <button class="btn" id="spinBtn" onclick="spinWheel()">بچرخون! 🎡</button>
-            <p id="wheelResult" style="color:var(--accent-gold); font-weight:bold; margin-top:10px; display:none;"></p>
-            <button class="btn" id="finalRewardBtn" style="display:none; background:linear-gradient(135deg, var(--accent-cyan), #00b4d8);" onclick="showFinalModal()">مشاهده نامه و جایزه نهایی 💌</button>
-        </div>
-    </div>
-
-    <!-- FINAL MODAL: Letter -->
-    <div id="finalModal" class="modal">
+    <!-- ۳. پاپ آپ شوخی وقتی "نه" رو می‌زنه -->
+    <div id="joke-modal" class="modal hidden">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('finalModal')">&times;</span>
-            <h2 style="text-align:center; color:var(--accent-pink);">عاشقتم ❤️</h2>
-            <h3 style="text-align:center; color:var(--accent-cyan);">دختر کوچولوی من 💗</h3>
-            <p>آدم‌هایی هستند که وارد زندگی‌مان می‌شوند و بدون هیچ ردپایی می‌روند، اما تو به شکلی متفاوت آمدی. رفته‌رفته به فردی نادیده‌نشدنی و ضروری در زندگی‌ام تبدیل شدی. این فقط به خاطر لحظات قشنگ یا حرف‌های شیرین نبود، بلکه چون حواسش را هم نداشتی اما باعث شدی خیلی از روزهای من بهتر شوند. از وقتی پیدا شدی، فهمیدم دوست داشتن را می‌شود در جزئیات کوچک حس کرد؛ در یک گفتگوی معمولی، در یک خنده مشترک، یا فقط در همین که بدانم هستی.</p>
-            <p>نمی‌دانم آینده چه چیزی برایمان دارد، اما این را خوب می‌دانم که تا وقتی کنار هم راه می‌رویم، می‌خواهم به ساختن خاطرات، حمایت از هدف‌هایت، جشن گرفتن موفقیت‌هایت و آغوش کشیدنت وقتی همه‌چیز خسته‌کننده می‌شود ادامه دهم. تو فرد بسیار مهمی برای من هستی و از ته دل امیدوارم هیچ‌وقت فراموش نکنی چقدر باارزشی و چقدر برایم اهمیت داری.</p>
-            <p>می‌خواهم بدانی که تو را دقیقاً همان‌طور که هستی تحسین می‌کنم؛ با تمام ویژگی‌های خوبت، نقص‌هایت، روزهای خوبت و روزهایی که چندان روبه‌راه نیستی. هیچ‌کس کامل نیست و دقیقاً همین است که به عشق معنا می‌دهد: انتخابِ ماندن، حتی زمانی که اوضاع آسان نیست. ممنونم بابت هر خاطره‌ای که با هم ساختیم، بابت هر لحظه‌ای که لبخند به لبم آوردی و بابت اینکه اجازه دادی بخشی از زندگیت باشم.</p>
+            <h2 style="font-size: 24px;">شوخی کردی دیگه؟! 🤨😂</h2>
+            <p style="margin: 15px 0; font-size: 18px; line-height: 1.6;">
+                مگه میشه خوشت نیاد! مگه دست خودته؟ باید خوشت بیاد! 😜❤️<br>
+                حالا بزن روی دکمه زیر تا هدیه اصلی رو ببینی!
+            </p>
+            <button id="modal-confirm-btn" class="btn-option" style="background: #ff79c6; color: #000; font-weight: bold; margin-top: 15px;">
+                باشه بابا آره خیلی قشنگ بود! ❤️✨
+            </button>
         </div>
+    </div>
+
+    <!-- ۴. صفحه کهکشان و ماه ۳ بعدی -->
+    <div id="galaxy-container" class="hidden">
+        <div class="galaxy-header">من دورت بگردم عزیزم ❤️</div>
+        <canvas id="moon-canvas"></canvas>
+        <div id="galaxy-fact" class="galaxy-fact">تعداد ستاره‌های این کهکشان، حتی نزدیک به میزان دوست داشتنت هم نیست... 🌌</div>
+        <!-- موزیک پس زمینه (می‌توانید لینک موزیک خود را جایگزین کنید) -->
+        <audio id="bg-music" loop>
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112181.mp3" type="audio/mpeg">
+        </audio>
     </div>
 
     <script>
-        // Web Audio Sound Effects Synthesizer
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        let audioCtx = null;
+        /* ===================================================
+           ۱. بخش سوالات (شخصی‌سازی سوالات و پاسخ‌ها در اینجا)
+        =================================================== */
+        const questions = [
+            {
+                question: "سوال اول: یادته اولین باری که باهم صحبت کردیم کی بود؟ 📅",
+                options: ["بله مگه میشه یادم بره! ❤️", "تقریبا یادمه 🤔", "نه زیاد یادم نیست 😅", "همین دیروز بود! 😂"],
+                // مهم نیست کدام گزینه انتخاب شود، وارد سوال بعدی می‌شود
+            },
+            {
+                question: "سوال دوم: به نظرت کی بیشتر اون یکی رو دوست داره؟ 🙄",
+                options: ["معلومه من! 😎", "تــو! 🥰", "هر دو به یک اندازه ❤️", "هیچکدام! 😂"],
+            },
+            {
+                question: "سوال سوم: آماده‌ای برای دیدن نامه عاشقانه؟ 💌",
+                options: ["آره زود باش! 😍", "بله حتماً ✨"],
+            }
+        ];
 
-        function playSound(type) {
-            if (!audioCtx) audioCtx = new AudioCtx();
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
-            osc.connect(gain); gain.connect(audioCtx.destination);
+        let currentQuestionIndex = 0;
 
-            if (type === 'pop') {
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.08);
-            } else if (type === 'win') {
-                [523, 659, 783, 1046].forEach((f, i) => {
-                    let o = audioCtx.createOscillator();
-                    let g = audioCtx.createGain();
-                    o.connect(g); g.connect(audioCtx.destination);
-                    o.frequency.value = f;
-                    g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.1);
-                    g.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.1 + 0.2);
-                    o.start(audioCtx.currentTime + i * 0.1);
-                    o.stop(audioCtx.currentTime + i * 0.1 + 0.2);
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const quizCard = document.getElementById('quiz-card');
+        const letterCard = document.getElementById('letter-card');
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const currentQ = questions[currentQuestionIndex];
+                questionText.innerText = currentQ.question;
+                optionsContainer.innerHTML = '';
+
+                currentQ.options.forEach((opt) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-option';
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        currentQuestionIndex++;
+                        loadQuestion();
+                    };
+                    optionsContainer.appendChild(btn);
                 });
-            } else if (type === 'err') {
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-                osc.frequency.linearRampToValueAtTime(110, audioCtx.currentTime + 0.2);
-                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-            }
-        }
-
-        // Screen Navigation
-        function goToStep(stepNum) {
-            playSound('pop');
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(`step-${stepNum}`).classList.add('active');
-            if (stepNum === 4) initMemoryGame();
-            if (stepNum === 5) drawWheel();
-        }
-
-        // Step 1 Setup & Verification
-        const daySelect = document.getElementById('daySelect');
-        for (let i = 1; i <= 31; i++) {
-            let opt = document.createElement('option');
-            opt.value = i; opt.textContent = i;
-            daySelect.appendChild(opt);
-        }
-
-        function verifyStep1() {
-            const d = daySelect.value;
-            const m = document.getElementById('monthSelect').value;
-            if (d === "21" && m === "اردیبهشت") {
-                playSound('win');
-                goToStep(2);
             } else {
-                playSound('err');
-                document.getElementById('err-1').style.display = 'block';
+                // اتمام سوالات -> نمایش نامه
+                quizCard.classList.add('hidden');
+                letterCard.classList.remove('hidden');
             }
         }
 
-        // Step 2 Lie Detector Logic
-        const lieQuestions = [
-            { q: "سوال ۱: خدایی کی موقع غذا خوردن لوس‌تره و ناز داره؟ 🍔", res: "🔍 اسکن انجام شد: نتیجه اسکن نشون میده ۱۰۰٪ تویی! 😜" },
-            { q: "سوال ۲: وقتی میگی 'باشه اصلاً هرچی تو بگی'، منظورت چیه؟ 🧐", res: "🔍 نتایج آنالیز: یعنی تهش باید کار خودتو بکنی! 😎" },
-            { q: "سوال ۳: چقدر موقع قهر کردن دلت میخواد بیام نازتو بکشم؟ 🥰", res: "🔍 اسکن قلب: بی‌نهایت درصد! اصلاً قهر می‌کنی که ناز بکشم ❤️" }
-        ];
-        let currentLieIdx = 0;
+        // شروع بازی
+        loadQuestion();
 
-        function runLieDetector() {
-            const box = document.getElementById('scannerBox');
-            const res = document.getElementById('lie-result');
-            box.classList.add('scanning');
-            playSound('pop');
+        /* ===================================================
+           ۲. دکمه آره (فرار کننده) و دکمه نه
+        =================================================== */
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const jokeModal = document.getElementById('joke-modal');
+        const modalConfirmBtn = document.getElementById('modal-confirm-btn');
 
-            setTimeout(() => {
-                box.classList.remove('scanning');
-                playSound('win');
-                res.innerText = lieQuestions[currentLieIdx].res;
-                res.style.display = 'block';
-                document.getElementById('nextLieBtn').style.display = 'block';
-            }, 1200);
+        // تابع فرار کردن دکمه "آره"
+        function moveYesButton() {
+            const padding = 50;
+            const maxX = window.innerWidth - yesBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - yesBtn.offsetHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+
+            yesBtn.style.position = 'fixed';
+            yesBtn.style.left = randomX + 'px';
+            yesBtn.style.top = randomY + 'px';
+            yesBtn.style.zIndex = '99';
         }
 
-        function nextLieQuestion() {
-            currentLieIdx++;
-            if (currentLieIdx < lieQuestions.length) {
-                document.getElementById('lie-q-text').innerText = lieQuestions[currentLieIdx].q;
-                document.getElementById('lie-result').style.display = 'none';
-                document.getElementById('nextLieBtn').style.display = 'none';
-            } else {
-                goToStep(3);
-            }
-        }
-
-        // Step 3 Sliders Logic
-        function updateSlider1(v) {
-            document.getElementById('s1-val').innerText = v + '%';
-        }
-        function updateSlider2(v) {
-            document.getElementById('s2-val').innerText = '۱۰۰٪ (تأیید شد، همیشه حق با شماست!)';
-        }
-        function updateSlider3(v) {
-            if (v > 90) document.getElementById('s3-val').innerText = '⚠️ خطا: میزان دلتنگی از بینهایت گذشت!';
-            else document.getElementById('s3-val').innerText = v + '%';
-        }
-
-        // Step 4 Memory Game Logic
-        const icons = ['🎬', '☕', '🍟', '👑', '🎬', '☕', '🍟', '👑'];
-        let flippedCards = [];
-        let matchedCount = 0;
-
-        function initMemoryGame() {
-            const grid = document.getElementById('memoryGrid');
-            grid.innerHTML = '';
-            flippedCards = [];
-            matchedCount = 0;
-            let shuffled = [...icons].sort(() => Math.random() - 0.5);
-
-            shuffled.forEach((icon, idx) => {
-                let card = document.createElement('div');
-                card.className = 'memory-card';
-                card.dataset.icon = icon;
-                card.dataset.index = idx;
-                card.onclick = () => flipCard(card);
-                grid.appendChild(card);
-            });
-        }
-
-        function flipCard(card) {
-            if (card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length === 2) return;
-            playSound('pop');
-            card.classList.add('flipped');
-            card.innerText = card.dataset.icon;
-            flippedCards.push(card);
-
-            if (flippedCards.length === 2) {
-                if (flippedCards[0].dataset.icon === flippedCards[1].dataset.icon) {
-                    playSound('win');
-                    flippedCards[0].classList.add('matched');
-                    flippedCards[1].classList.add('matched');
-                    flippedCards = [];
-                    matchedCount += 2;
-                    if (matchedCount === icons.length) {
-                        document.getElementById('memoryNextBtn').style.display = 'block';
-                    }
-                } else {
-                    setTimeout(() => {
-                        flippedCards[0].classList.remove('flipped');
-                        flippedCards[1].classList.remove('flipped');
-                        flippedCards[0].innerText = '';
-                        flippedCards[1].innerText = '';
-                        flippedCards = [];
-                    }, 800);
-                }
-            }
-        }
-
-        // Step 5 Wheel of Fortune Logic
-        const segments = [
-            "🍟 پیتزا و سیب‌زمینی",
-            "💆‍♀️ ۱ ساعت ماساژ",
-            "👑 ۵ بار دستور دادن",
-            "🎬 انتخاب فیلم شب",
-            "🏆 مالکیت ۱۰۰٪ قلب من"
-        ];
-        const colors = ['#ff2a6d', '#05d9e8', '#ffb703', '#7209b7', '#4cc9f0'];
-
-        function drawWheel() {
-            const canvas = document.getElementById('wheelCanvas');
-            const ctx = canvas.getContext('2d');
-            const arc = (Math.PI * 2) / segments.length;
-
-            for (let i = 0; i < segments.length; i++) {
-                ctx.beginPath();
-                ctx.fillStyle = colors[i];
-                ctx.moveTo(110, 110);
-                ctx.arc(110, 110, 110, i * arc, (i + 1) * arc);
-                ctx.fill();
-
-                ctx.save();
-                ctx.translate(110, 110);
-                ctx.rotate(i * arc + arc / 2);
-                ctx.fillStyle = "#fff";
-                ctx.font = "bold 10px Tahoma";
-                ctx.fillText(segments[i], 30, 4);
-                ctx.restore();
-            }
-        }
-
-        let isSpinning = false;
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
-            playSound('pop');
-
-            const canvas = document.getElementById('wheelCanvas');
-            let rotation = 0;
-            let targetRotation = 1440 + Math.random() * 360; 
-            let start = null;
-
-            function animate(timestamp) {
-                if (!start) start = timestamp;
-                let progress = timestamp - start;
-                let easeOut = 1 - Math.pow(1 - Math.min(progress / 4000, 1), 3);
-                rotation = easeOut * targetRotation;
-                canvas.style.transform = `rotate(${rotation}deg)`;
-
-                if (progress < 4000) {
-                    requestAnimationFrame(animate);
-                } else {
-                    isSpinning = false;
-                    playSound('win');
-                    document.getElementById('wheelResult').innerText = "🎉 مبارکه! شما برنده جایزه: «مالکیت ۱۰۰٪ قلب من» شدید!";
-                    document.getElementById('wheelResult').style.display = 'block';
-                    document.getElementById('finalRewardBtn').style.display = 'block';
-                    document.getElementById('spinBtn').style.display = 'none';
-                }
-            }
-            requestAnimationFrame(animate);
-        }
-
-        function showFinalModal() {
-            playSound('pop');
-            document.getElementById('finalModal').style.display = 'flex';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        // Ambient Background Particle Physics
-        const bgCanvas = document.getElementById('bgCanvas');
-        const bgCtx = bgCanvas.getContext('2d');
-        let width = bgCanvas.width = window.innerWidth;
-        let height = bgCanvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            width = bgCanvas.width = window.innerWidth;
-            height = bgCanvas.height = window.innerHeight;
+        // وقتی موس روی دکمه "آره" می‌رود یا لمس می‌شود، فرار می‌کند
+        yesBtn.addEventListener('mouseover', moveYesButton);
+        yesBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // جلوگیری از کلیک روی موبایل
+            moveYesButton();
         });
 
-        const particles = Array.from({ length: 35 }, () => ({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            r: Math.random() * 2 + 1,
-            sy: Math.random() * 0.5 + 0.2,
-            opacity: Math.random() * 0.5 + 0.2
-        }));
+        // کلیک روی دکمه "نه" -> باز شدن پاپ آپ شوخی
+        noBtn.addEventListener('click', () => {
+            jokeModal.classList.remove('hidden');
+        });
 
-        function animateBg() {
-            bgCtx.clearRect(0, 0, width, height);
-            particles.forEach(p => {
-                p.y -= p.sy;
-                if (p.y < 0) p.y = height;
-                bgCtx.fillStyle = `rgba(5, 217, 232, ${p.opacity})`;
-                bgCtx.beginPath();
-                bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                bgCtx.fill();
+        // کلیک روی دکمه داخل پاپ آپ -> رفتن به صفحه کهکشان
+        modalConfirmBtn.addEventListener('click', () => {
+            jokeModal.classList.add('hidden');
+            letterCard.classList.add('hidden');
+            startGalaxyScene();
+        });
+
+
+        /* ===================================================
+           ۳. ساخت صحنه کهکشان و ماه ۳ بعدی با Three.js
+        =================================================== */
+        function startGalaxyScene() {
+            const galaxyContainer = document.getElementById('galaxy-container');
+            galaxyContainer.classList.remove('hidden');
+
+            // پخش موزیک پس زمینه
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(e => console.log("Audio play blocked by browser"));
+
+            // ۱. صحنه و دوربین
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('moon-canvas'), antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // ۲. ساخت تکسچر سفارشی ماه همراه با اسم "آلما" روی آن
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+
+            // پس‌زمینه بافت ماه (خاکستری نویزدار)
+            ctx.fillStyle = '#888888';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // افزودن لکه‌ها و چاله‌های ماه (Craters)
+            for (let i = 0; i < 500; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = Math.random() * 15 + 2;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(50, 50, 50, 0.3)';
+                ctx.fill();
+            }
+
+            // نوشتن اسم "آلما" با فونت درشت و درخشان روی ماه
+            ctx.font = 'Bold 90px Vazirmatn, Tahoma';
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.shadowColor = '#ff79c6';
+            ctx.shadowBlur = 20;
+            // دو بار می‌نویسیم تا در هر دو طرف کره دیده شود
+            ctx.fillText('آلما', canvas.width / 4, canvas.height / 2 + 30);
+            ctx.fillText('آلما', (canvas.width / 4) * 3, canvas.height / 2 + 30);
+
+            const moonTexture = new THREE.CanvasTexture(canvas);
+
+            // ۳. کره ماه
+            const geometry = new THREE.SphereGeometry(2, 64, 64);
+            const material = new THREE.MeshStandardMaterial({
+                map: moonTexture,
+                roughness: 0.8,
+                metalness: 0.1
             });
-            requestAnimationFrame(animateBg);
+            const moon = new THREE.Mesh(geometry, material);
+            scene.add(moon);
+
+            // ۴. نورپردازی روی ماه
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+            scene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0xffffff, 1.5);
+            pointLight.position.set(10, 10, 10);
+            scene.add(pointLight);
+
+            // ۵. ستاره‌های پشت زمینه کهکشان
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsCount = 1500;
+            const starPositions = new Float32Array(starsCount * 3);
+
+            for (let i = 0; i < starsCount * 3; i++) {
+                starPositions[i] = (Math.random() - 0.5) * 100;
+            }
+
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
+            const starField = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starField);
+
+            // ۶. انیمیشن چرخش دوربین و ماه
+            function animate() {
+                requestAnimationFrame(animate);
+                moon.rotation.y += 0.005; // چرخش ماه دور خودش
+                starField.rotation.y += 0.0002;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // تنظیم سایز هنگام تغییر اندازه مرورگر
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // ۷. تغییر متن‌های کهکشانی عاشقانه به صورت دوره‌ای
+            const facts = [
+                "تعداد ستاره‌های این کهکشان، حتی نزدیک به میزان دوست داشتنت هم نیست... 🌌",
+                "تو مثل ماه، ماهِ آسمونِ منی... ✨",
+                "کل کهکشان در برابر زیبایی خنده‌هات کم میاره ❤️",
+                "من دورت بگردم عزیزم... 🌙💫"
+            ];
+            let factIndex = 0;
+            const factElement = document.getElementById('galaxy-fact');
+
+            setInterval(() => {
+                factIndex = (factIndex + 1) % facts.length;
+                factElement.style.opacity = '0';
+                setTimeout(() => {
+                    factElement.innerText = facts[factIndex];
+                    factElement.style.opacity = '1';
+                }, 1000);
+            }, 5000);
         }
-        animateBg();
     </script>
 </body>
 </html>
