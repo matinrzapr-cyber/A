@@ -6,11 +6,12 @@
     <title>VIP Access | برای تک‌ستاره من ✨</title>
     <style>
         :root {
-            --bg-color: #0a0c16;
-            --card-bg: rgba(22, 27, 46, 0.75);
+            --bg-color: #060814;
+            --card-bg: rgba(18, 22, 41, 0.82);
             --accent-pink: #ff2a6d;
             --accent-cyan: #05d9e8;
             --accent-gold: #ffb703;
+            --accent-purple: #9d4edd;
             --text-color: #f1f5f9;
         }
 
@@ -48,8 +49,8 @@
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            transform: scale(0.95);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.9);
             z-index: 10;
             padding: 20px;
         }
@@ -61,42 +62,53 @@
             z-index: 20;
         }
 
-        /* Glassmorphism Card */
+        /* Glassmorphism Ultra Card */
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 24px;
-            padding: 28px 22px;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 28px;
+            padding: 28px 24px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 42, 109, 0.15);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.85), 0 0 35px rgba(255, 42, 109, 0.22);
             width: 100%;
-            max-width: 380px;
+            max-width: 390px;
             position: relative;
         }
 
-        /* Progress Bar Top */
+        .badge-romantic {
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple));
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            box-shadow: 0 0 12px rgba(255, 42, 109, 0.5);
+            font-weight: bold;
+        }
+
         .step-indicator {
             position: absolute;
-            top: 15px;
+            top: 15px; right: 20px;
             font-size: 0.75rem;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             color: var(--accent-cyan);
-            text-transform: uppercase;
             font-weight: bold;
         }
 
         h2 {
             color: #fff;
             font-size: 1.35rem;
-            margin-top: 15px;
+            margin-top: 10px;
             margin-bottom: 10px;
             font-weight: 700;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
         }
 
         p {
-            color: #94a3b8;
+            color: #cbd5e1;
             font-size: 0.92rem;
             line-height: 1.6;
             margin-bottom: 20px;
@@ -109,21 +121,21 @@
             color: #fff;
             padding: 14px 28px;
             font-size: 0.98rem;
-            border-radius: 14px;
+            border-radius: 16px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 42, 109, 0.35);
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 25px rgba(255, 42, 109, 0.4);
+            transition: all 0.25s ease;
             font-family: inherit;
             font-weight: bold;
             width: 100%;
             margin-top: 10px;
         }
 
-        .btn:active { transform: scale(0.96); }
+        .btn:active { transform: scale(0.95); }
 
         select {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             color: #fff;
             padding: 12px;
             border-radius: 12px;
@@ -136,27 +148,27 @@
 
         /* Lie Detector Scanner */
         .fingerprint-box {
-            width: 90px;
-            height: 90px;
+            width: 95px; height: 95px;
             border-radius: 50%;
             border: 2px dashed var(--accent-cyan);
             margin: 15px auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.8rem;
+            font-size: 3rem;
             cursor: pointer;
             position: relative;
             transition: all 0.3s;
+            background: rgba(5, 217, 232, 0.05);
         }
 
         .fingerprint-box.scanning {
             border-color: var(--accent-pink);
-            box-shadow: 0 0 25px var(--accent-pink);
-            animation: pulse 1s infinite alternate;
+            box-shadow: 0 0 30px var(--accent-pink);
+            animation: pulse 0.8s infinite alternate;
         }
 
-        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
 
         /* Custom Sliders */
         .slider-group {
@@ -188,7 +200,7 @@
         .memory-card {
             aspect-ratio: 1;
             background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 14px;
             display: flex;
             justify-content: center;
@@ -199,12 +211,12 @@
         }
 
         .memory-card.flipped {
-            background: rgba(5, 217, 232, 0.2);
+            background: rgba(5, 217, 232, 0.25);
             border-color: var(--accent-cyan);
         }
 
         .memory-card.matched {
-            background: rgba(255, 42, 109, 0.3);
+            background: rgba(255, 42, 109, 0.35);
             border-color: var(--accent-pink);
             cursor: default;
         }
@@ -212,24 +224,21 @@
         /* Wheel of Fortune */
         .wheel-container {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 220px; height: 220px;
             margin: 15px auto;
         }
 
         canvas#wheelCanvas {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(0,0,0,0.6);
         }
 
         .wheel-pointer {
             position: absolute;
-            top: -10px;
-            left: 50%;
+            top: -12px; left: 50%;
             transform: translateX(-50%);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             z-index: 30;
             filter: drop-shadow(0 2px 5px #000);
         }
@@ -239,8 +248,8 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(15px);
             z-index: 500;
             justify-content: center;
             align-items: center;
@@ -248,25 +257,110 @@
         }
 
         .modal-content {
-            background: #121629;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(18, 22, 41, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #f1f5f9;
-            padding: 25px;
-            border-radius: 20px;
-            max-width: 400px;
+            padding: 28px;
+            border-radius: 24px;
+            max-width: 420px;
             width: 100%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
             text-align: justify;
             line-height: 1.8;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(255,42,109,0.25);
         }
 
-        .close-btn {
+        /* Interactive Choice Box at bottom of Letter */
+        .choice-box {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(255,255,255,0.2);
+            text-align: center;
+            position: relative;
+            min-height: 120px;
+        }
+
+        .choice-box h3 {
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
             position: absolute;
-            top: 12px; left: 16px;
-            font-size: 1.5rem; cursor: pointer; color: #64748b;
+            left: 20%;
+            transition: all 0.15s ease;
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 12px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            right: 20%;
+        }
+
+        /* Full Galaxy Scene Overlay */
+        #galaxyOverlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 1000;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        canvas#galaxyCanvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        .galaxy-ui-top {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 20px var(--accent-pink), 0 0 40px var(--accent-pink);
+            font-size: 1.8rem;
+            font-weight: 800;
+            animation: glowText 2s infinite alternate;
+        }
+
+        .galaxy-ui-bottom {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: #e2e8f0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            font-size: 1rem;
+            max-width: 90%;
+            line-height: 1.6;
+        }
+
+        @keyframes glowText {
+            0% { transform: scale(1); text-shadow: 0 0 15px var(--accent-pink); }
+            100% { transform: scale(1.05); text-shadow: 0 0 35px var(--accent-cyan), 0 0 50px var(--accent-pink); }
         }
     </style>
 </head>
@@ -277,9 +371,10 @@
     <!-- STEP 1: VIP Verification -->
     <div id="step-1" class="screen active">
         <div class="card">
-            <div class="step-indicator">مرحله ۱ از ۵</div>
-            <h2>احراز هویت سیستم VIP 🔒</h2>
-            <p>برای دسترسی به اطلاعات محرمانه قلب، تاریخ آشنایی را وارد کنید:</p>
+            <span class="badge-romantic">💖 ورود اختصاصی عشقم</span>
+            <div class="step-indicator">۱ / ۵</div>
+            <h2>احراز هویت قلب من 🔒</h2>
+            <p>برای ورود به دنیای اختصاصی خودمون، تاریخ شروع قشنگ‌ترین روز زندگیمون رو وارد کن:</p>
             <div>
                 <select id="daySelect"></select>
                 <select id="monthSelect">
@@ -297,9 +392,9 @@
                     <option value="اسفند">اسفند</option>
                 </select>
             </div>
-            <button class="btn" onclick="verifyStep1()">تأیید و ورود 😎</button>
-            <p id="err-1" style="color:#ff2a6d; display:none; margin-top:12px; font-size:0.85rem;">
-                🚨 خطای ۴۰۴: دسترسی ناموفق! مگه میشه یادت نباشه؟! دوباره بزن 💔
+            <button class="btn" onclick="verifyStep1()">تأیید و ورود به قلبت 😎✨</button>
+            <p id="err-1" style="color:#ff2a6d; display:none; margin-top:12px; font-size:0.85rem; font-weight:bold;">
+                🚨 مگه میشه تاریخ آشناییمون یادت بره دختر قشنگم؟! دوباره بزن 💔
             </p>
         </div>
     </div>
@@ -307,16 +402,17 @@
     <!-- STEP 2: Lie Detector Test -->
     <div id="step-2" class="screen">
         <div class="card">
-            <div class="step-indicator">مرحله ۲ از ۵</div>
-            <h2>تست دروغ‌سنج هوشمند 🕵️‍♂️</h2>
+            <span class="badge-romantic">🕵️‍♂️ آنالیز هوشمند رفتار</span>
+            <div class="step-indicator">۲ / ۵</div>
+            <h2>تست دروغ‌سنج و فضولی‌سنج!</h2>
             <p id="lie-q-text">سوال ۱: خدایی کی موقع غذا خوردن لوس‌تره و ناز داره؟ 🍔</p>
             
             <div class="fingerprint-box" id="scannerBox" onclick="runLieDetector()">
                 <span>👆</span>
             </div>
-            <p style="font-size:0.8rem; color:#64748b; margin-bottom:10px;">روی اثر انگشت لمس کن تا آنالیز بشه!</p>
+            <p style="font-size:0.8rem; color:#94a3b8; margin-bottom:10px;">انگشتت رو بزار رو اسکنر تا آنالیز بشه!</p>
 
-            <div id="lie-result" style="display:none; color:var(--accent-cyan); font-weight:bold; margin-top:10px;"></div>
+            <div id="lie-result" style="display:none; color:var(--accent-cyan); font-weight:bold; margin-top:10px; background:rgba(5,217,232,0.1); padding:10px; border-radius:12px;"></div>
             <button class="btn" id="nextLieBtn" style="display:none;" onclick="nextLieQuestion()">سوال بعدی ➡️</button>
         </div>
     </div>
@@ -324,14 +420,15 @@
     <!-- STEP 3: Mood Calibrator -->
     <div id="step-3" class="screen">
         <div class="card">
-            <div class="step-indicator">مرحله ۳ از ۵</div>
-            <h2>تنظیمات و کالیبراسیون اخلاق 🎛️</h2>
-            <p>مقادیر زیر را جهت بهینه‌سازی رابطه تنظیم کنید:</p>
+            <span class="badge-romantic">🎛️ بهینه‌سازی پارامترهای رابطه</span>
+            <div class="step-indicator">۳ / ۵</div>
+            <h2>کالیبراسیون اخلاق و عشقمون</h2>
+            <p>مقادیر زیر رو روی تنظیمات دلخواهت بگذار:</p>
 
             <div class="slider-group">
                 <label>درجه لوس شدن و ناز کردن (٪)</label>
-                <input type="range" min="0" max="100" value="50" oninput="updateSlider1(this.value)">
-                <span id="s1-val" style="font-size:0.8rem; color:var(--accent-pink);">۵۰٪</span>
+                <input type="range" min="0" max="100" value="70" oninput="updateSlider1(this.value)">
+                <span id="s1-val" style="font-size:0.8rem; color:var(--accent-pink);">۷۰٪ (مجاز تا بی‌نهایت!)</span>
             </div>
 
             <div class="slider-group">
@@ -341,21 +438,22 @@
             </div>
 
             <div class="slider-group">
-                <label>میزان دلتنگی وقتی نیستی</label>
-                <input type="range" min="0" max="100" value="80" oninput="updateSlider3(this.value)">
-                <span id="s3-val" style="font-size:0.8rem; color:var(--accent-gold);">۸۰٪</span>
+                <label>میزان دلتنگی من وقتی نیستی</label>
+                <input type="range" min="0" max="100" value="95" oninput="updateSlider3(this.value)">
+                <span id="s3-val" style="font-size:0.8rem; color:var(--accent-gold);">۹۵٪</span>
             </div>
 
-            <button class="btn" onclick="goToStep(4)">اعمال تنظیمات و مرحله بعد 🚀</button>
+            <button class="btn" onclick="goToStep(4)">ثبت تنظیمات و بازی بعدی 🚀</button>
         </div>
     </div>
 
     <!-- STEP 4: Memory Match Game -->
     <div id="step-4" class="screen">
         <div class="card">
-            <div class="step-indicator">مرحله ۴ از ۵</div>
-            <h2>تست حافظه و جفت‌سازی کارت‌ها 🃏</h2>
-            <p>تمام جفت‌های مشابه را پیدا کنید تا مرحله بعد باز شود:</p>
+            <span class="badge-romantic">🃏 بازی و سرگرمی دونفره</span>
+            <div class="step-indicator">۴ / ۵</div>
+            <h2>تست حافظه عشقولانه</h2>
+            <p>کارت‌های جفت رو پیدا کن تا قفل مرحله نهایی باز بشه:</p>
 
             <div class="memory-grid" id="memoryGrid"></div>
 
@@ -366,9 +464,10 @@
     <!-- STEP 5: Wheel of Fortune -->
     <div id="step-5" class="screen">
         <div class="card">
-            <div class="step-indicator">مرحله ۵ از ۵</div>
-            <h2>گردونه شانس و جایزه‌های دونفره 🎰</h2>
-            <p>دکمه چرخش را بزنید تا جایزه شما مشخص شود!</p>
+            <span class="badge-romantic">🎁 جایزه‌های ویژه فقط برای تو</span>
+            <div class="step-indicator">۵ / ۵</div>
+            <h2>گردونه شانس دونفره 🎰</h2>
+            <p>دکمه چرخش رو بزن تا جایزه امروزت مشخص بشه!</p>
 
             <div class="wheel-container">
                 <div class="wheel-pointer">🔻</div>
@@ -377,29 +476,50 @@
 
             <button class="btn" id="spinBtn" onclick="spinWheel()">بچرخون! 🎡</button>
             <p id="wheelResult" style="color:var(--accent-gold); font-weight:bold; margin-top:10px; display:none;"></p>
-            <button class="btn" id="finalRewardBtn" style="display:none; background:linear-gradient(135deg, var(--accent-cyan), #00b4d8);" onclick="showFinalModal()">مشاهده نامه و جایزه نهایی 💌</button>
+            <button class="btn" id="finalRewardBtn" style="display:none; background:linear-gradient(135deg, var(--accent-pink), var(--accent-purple));" onclick="showFinalModal()">مشاهده نامه عاشقانه 💌</button>
         </div>
     </div>
 
     <!-- FINAL MODAL: Letter -->
     <div id="finalModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('finalModal')">&times;</span>
-            <h2 style="text-align:center; color:var(--accent-pink);">عاشقتم ❤️</h2>
-            <h3 style="text-align:center; color:var(--accent-cyan);">دختر کوچولوی من 💗</h3>
-            <p>آدم‌هایی هستند که وارد زندگی‌مان می‌شوند و بدون هیچ ردپایی می‌روند، اما تو به شکلی متفاوت آمدی. رفته‌رفته به فردی نادیده‌نشدنی و ضروری در زندگی‌ام تبدیل شدی. این فقط به خاطر لحظات قشنگ یا حرف‌های شیرین نبود، بلکه چون حواسش را هم نداشتی اما باعث شدی خیلی از روزهای من بهتر شوند. از وقتی پیدا شدی، فهمیدم دوست داشتن را می‌شود در جزئیات کوچک حس کرد؛ در یک گفتگوی معمولی، در یک خنده مشترک، یا فقط در همین که بدانم هستی.</p>
+            <h2 style="text-align:center; color:var(--accent-pink);">عاشقتم دیوونه‌وار ❤️</h2>
+            <h3 style="text-align:center; color:var(--accent-cyan);">دختر قشنگ و دوست‌داشتنی من 💗</h3>
+            <p>آدم‌هایی هستند که وارد زندگی‌مان می‌شوند و بدون هیچ ردپایی می‌روند، اما تو به شکلی متفاوت آمدی. رفته‌رفته به فردی نادیده‌نشدنی و ضروری در زندگی‌ام تبدیل شدی. این فقط به خاطر لحظات قشنگ یا حرف‌های شیرین نبود، بلکه چون حواسش را هم نداشتی اما باعث شدی خیلی از روزهای من بهتر شوند.</p>
+            <p>از وقتی پیدا شدی، فهمیدم دوست داشتن را می‌شود در جزئیات کوچک حس کرد؛ در یک گفتگوی معمولی، در یک خنده مشترک، یا فقط در همین که بدانم هستی.</p>
             <p>نمی‌دانم آینده چه چیزی برایمان دارد، اما این را خوب می‌دانم که تا وقتی کنار هم راه می‌رویم، می‌خواهم به ساختن خاطرات، حمایت از هدف‌هایت، جشن گرفتن موفقیت‌هایت و آغوش کشیدنت وقتی همه‌چیز خسته‌کننده می‌شود ادامه دهم. تو فرد بسیار مهمی برای من هستی و از ته دل امیدوارم هیچ‌وقت فراموش نکنی چقدر باارزشی و چقدر برایم اهمیت داری.</p>
-            <p>می‌خواهم بدانی که تو را دقیقاً همان‌طور که هستی تحسین می‌کنم؛ با تمام ویژگی‌های خوبت، نقص‌هایت، روزهای خوبت و روزهایی که چندان روبه‌راه نیستی. هیچ‌کس کامل نیست و دقیقاً همین است که به عشق معنا می‌دهد: انتخابِ ماندن، حتی زمانی که اوضاع آسان نیست. ممنونم بابت هر خاطره‌ای که با هم ساختیم، بابت هر لحظه‌ای که لبخند به لبم آوردی و بابت اینکه اجازه دادی بخشی از زندگیت باشم.</p>
+            <p>می‌خواهم بدانی که تو را دقیقاً همان‌طور که هستی تحسین می‌کنم؛ با تمام ویژگی‌های خوبت، روزهای خوبت و روزهایی که چندان روبه‌راه نیستی. هیچ‌کس کامل نیست و دقیقاً همین است که به عشق معنا می‌دهد: انتخابِ ماندن، حتی زمانی که اوضاع آسان نیست. ممنونم بابت هر خاطره‌ای که با هم ساختیم و بابت اینکه اجازه دادی بخشی از زندگیت باشم.</p>
+
+            <div class="choice-box">
+                <h3>خوشت اومد عزیزم؟ ✨</h3>
+                <button class="btn-yes" id="btnYes" onmouseover="fleeYesBtn()" onclick="triggerGalaxyScene()">آره 😍</button>
+                <button class="btn-no" onclick="handleNoBtn()">نه 😜</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULL GALAXY SPACE SCENE -->
+    <div id="galaxyOverlay">
+        <canvas id="galaxyCanvas"></canvas>
+        <div class="galaxy-ui-top">من دورت بگردم عزیزم 🌙✨</div>
+        <div class="galaxy-ui-bottom">
+            تو کل این کهکشان بزرگ با تمام ستاره‌هاش، فقط تویی که ماه منی... ❤️<br>
+            تمام فضا پر شده از عشقت!
         </div>
     </div>
 
     <script>
-        // Web Audio Sound Effects Synthesizer
+        // Web Audio Synthesizer Engine
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
-        function playSound(type) {
+        function ensureAudio() {
             if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSound(type) {
+            ensureAudio();
             let osc = audioCtx.createOscillator();
             let gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
@@ -429,6 +549,15 @@
                 gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+            } else if (type === 'scream') {
+                // High pitch funny squeak/scream sound effect
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1800, audioCtx.currentTime + 0.15);
+                osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.3);
+                gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.3);
             }
         }
 
@@ -441,7 +570,7 @@
             if (stepNum === 5) drawWheel();
         }
 
-        // Step 1 Setup & Verification
+        // Step 1 Verification
         const daySelect = document.getElementById('daySelect');
         for (let i = 1; i <= 31; i++) {
             let opt = document.createElement('option');
@@ -461,7 +590,7 @@
             }
         }
 
-        // Step 2 Lie Detector Logic
+        // Step 2 Lie Detector
         const lieQuestions = [
             { q: "سوال ۱: خدایی کی موقع غذا خوردن لوس‌تره و ناز داره؟ 🍔", res: "🔍 اسکن انجام شد: نتیجه اسکن نشون میده ۱۰۰٪ تویی! 😜" },
             { q: "سوال ۲: وقتی میگی 'باشه اصلاً هرچی تو بگی'، منظورت چیه؟ 🧐", res: "🔍 نتایج آنالیز: یعنی تهش باید کار خودتو بکنی! 😎" },
@@ -495,35 +624,27 @@
             }
         }
 
-        // Step 3 Sliders Logic
-        function updateSlider1(v) {
-            document.getElementById('s1-val').innerText = v + '%';
-        }
-        function updateSlider2(v) {
-            document.getElementById('s2-val').innerText = '۱۰۰٪ (تأیید شد، همیشه حق با شماست!)';
-        }
+        // Step 3 Sliders
+        function updateSlider1(v) { document.getElementById('s1-val').innerText = v + '%'; }
+        function updateSlider2(v) { document.getElementById('s2-val').innerText = '۱۰۰٪ (تأیید شد، همیشه حق با شماست!)'; }
         function updateSlider3(v) {
             if (v > 90) document.getElementById('s3-val').innerText = '⚠️ خطا: میزان دلتنگی از بینهایت گذشت!';
             else document.getElementById('s3-val').innerText = v + '%';
         }
 
-        // Step 4 Memory Game Logic
+        // Step 4 Memory Game
         const icons = ['🎬', '☕', '🍟', '👑', '🎬', '☕', '🍟', '👑'];
-        let flippedCards = [];
-        let matchedCount = 0;
+        let flippedCards = [], matchedCount = 0;
 
         function initMemoryGame() {
             const grid = document.getElementById('memoryGrid');
-            grid.innerHTML = '';
-            flippedCards = [];
-            matchedCount = 0;
+            grid.innerHTML = ''; flippedCards = []; matchedCount = 0;
             let shuffled = [...icons].sort(() => Math.random() - 0.5);
 
             shuffled.forEach((icon, idx) => {
                 let card = document.createElement('div');
                 card.className = 'memory-card';
                 card.dataset.icon = icon;
-                card.dataset.index = idx;
                 card.onclick = () => flipCard(card);
                 grid.appendChild(card);
             });
@@ -550,22 +671,15 @@
                     setTimeout(() => {
                         flippedCards[0].classList.remove('flipped');
                         flippedCards[1].classList.remove('flipped');
-                        flippedCards[0].innerText = '';
-                        flippedCards[1].innerText = '';
+                        flippedCards[0].innerText = ''; flippedCards[1].innerText = '';
                         flippedCards = [];
                     }, 800);
                 }
             }
         }
 
-        // Step 5 Wheel of Fortune Logic
-        const segments = [
-            "🍟 پیتزا و سیب‌زمینی",
-            "💆‍♀️ ۱ ساعت ماساژ",
-            "👑 ۵ بار دستور دادن",
-            "🎬 انتخاب فیلم شب",
-            "🏆 مالکیت ۱۰۰٪ قلب من"
-        ];
+        // Step 5 Wheel of Fortune
+        const segments = ["🍟 پیتزا و سیب‌زمینی", "💆‍♀️ ۱ ساعت ماساژ", "👑 ۵ بار دستور دادن", "🎬 انتخاب فیلم شب", "🏆 مالکیت ۱۰۰٪ قلب من"];
         const colors = ['#ff2a6d', '#05d9e8', '#ffb703', '#7209b7', '#4cc9f0'];
 
         function drawWheel() {
@@ -613,7 +727,7 @@
                 } else {
                     isSpinning = false;
                     playSound('win');
-                    document.getElementById('wheelResult').innerText = "🎉 مبارکه! شما برنده جایزه: «مالکیت ۱۰۰٪ قلب من» شدید!";
+                    document.getElementById('wheelResult').innerText = "🎉 مبارکه! برنده جایزه: «مالکیت ۱۰۰٪ قلب من» شدی!";
                     document.getElementById('wheelResult').style.display = 'block';
                     document.getElementById('finalRewardBtn').style.display = 'block';
                     document.getElementById('spinBtn').style.display = 'none';
@@ -627,11 +741,161 @@
             document.getElementById('finalModal').style.display = 'flex';
         }
 
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
+        // Fleeing "آره" Button Mechanics with Funny Sound
+        function fleeYesBtn() {
+            playSound('scream');
+            const btn = document.getElementById('btnYes');
+            const box = document.querySelector('.choice-box');
+            const rect = box.getBoundingClientRect();
+
+            let newX = Math.random() * (rect.width - 80);
+            let newY = Math.random() * (rect.height - 40);
+
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
         }
 
-        // Ambient Background Particle Physics
+        function handleNoBtn() {
+            playSound('pop');
+            alert("شوخی می‌کنی دیگه؟! 😂\nمعلومه که باید خوشت بیاد! مگه دست خودته خوشت نیاد؟! 😜💖");
+            triggerGalaxyScene();
+        }
+
+        // Full Interactive Galaxy Space Engine
+        function triggerGalaxyScene() {
+            document.getElementById('finalModal').style.display = 'none';
+            const overlay = document.getElementById('galaxyOverlay');
+            overlay.style.display = 'flex';
+            playSound('win');
+            playRomanticMusic();
+            initGalaxyCanvas();
+        }
+
+        // Synthesized Romantic Ambient Music Loop
+        function playRomanticMusic() {
+            ensureAudio();
+            const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]; // C major gentle arpeggio
+            let step = 0;
+            setInterval(() => {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = notes[step % notes.length];
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 1.2);
+                step++;
+            }, 400);
+        }
+
+        // Space & Orbiting Moon Canvas Animation
+        function initGalaxyCanvas() {
+            const canvas = document.getElementById('galaxyCanvas');
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth;
+            let h = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            });
+
+            // Space Stars
+            const stars = Array.from({ length: 200 }, () => ({
+                x: (Math.random() - 0.5) * w * 2,
+                y: (Math.random() - 0.5) * h * 2,
+                z: Math.random() * w
+            }));
+
+            // Floating "I LOVE YOU" Texts in Space
+            const textPhrases = ["I LOVE YOU", "دوستت دارم", "تک‌ستاره من", "I LOVE YOU", "عاشقتم", "می‌میرم برات", "I LOVE YOU"];
+            const spaceTexts = Array.from({ length: 25 }, () => ({
+                text: textPhrases[Math.floor(Math.random() * textPhrases.length)],
+                x: (Math.random() - 0.5) * w * 1.5,
+                y: (Math.random() - 0.5) * h * 1.5,
+                z: Math.random() * w,
+                scale: Math.random() * 0.5 + 0.5
+            }));
+
+            let angle = 0;
+
+            function render() {
+                ctx.fillStyle = "rgba(6, 8, 20, 0.4)";
+                ctx.fillRect(0, 0, w, h);
+
+                let cx = w / 2;
+                let cy = h / 2;
+
+                // Render Stars
+                stars.forEach(s => {
+                    s.z -= 1.5;
+                    if (s.z <= 0) s.z = w;
+                    let k = 250 / s.z;
+                    let px = s.x * k + cx;
+                    let py = s.y * k + cy;
+
+                    if (px >= 0 && px < w && py >= 0 && py < h) {
+                        let size = Math.max(0.5, (1 - s.z / w) * 2.5);
+                        ctx.fillStyle = "#fff";
+                        ctx.beginPath();
+                        ctx.arc(px, py, size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                });
+
+                // Render Floating Love Texts
+                spaceTexts.forEach(t => {
+                    t.z -= 1;
+                    if (t.z <= 0) t.z = w;
+                    let k = 250 / t.z;
+                    let px = t.x * k + cx;
+                    let py = t.y * k + cy;
+
+                    if (px >= 0 && px < w && py >= 0 && py < h) {
+                        let alpha = (1 - t.z / w);
+                        ctx.fillStyle = `rgba(255, 42, 109, ${alpha})`;
+                        ctx.font = `bold ${Math.floor(14 * k * 0.08)}px Tahoma`;
+                        ctx.textAlign = "center";
+                        ctx.fillText(t.text, px, py);
+                    }
+                });
+
+                // Render Orbiting Moon
+                angle += 0.015;
+                let moonDistance = 140;
+                let moonX = cx + Math.cos(angle) * moonDistance;
+                let moonY = cy + Math.sin(angle) * 40; // Elliptical orbit depth
+                let moonRadius = 45 + Math.sin(angle) * 10; // 3D depth effect
+
+                // Moon Glow
+                let glow = ctx.createRadialGradient(moonX, moonY, 10, moonX, moonY, moonRadius + 30);
+                glow.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+                glow.addColorStop(0.4, "rgba(5, 217, 232, 0.4)");
+                glow.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.fillStyle = glow;
+                ctx.beginPath();
+                ctx.arc(moonX, moonY, moonRadius + 30, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Moon Body
+                let moonGrad = ctx.createRadialGradient(moonX - 10, moonY - 10, 5, moonX, moonY, moonRadius);
+                moonGrad.addColorStop(0, "#ffffff");
+                moonGrad.addColorStop(0.7, "#cbd5e1");
+                moonGrad.addColorStop(1, "#64748b");
+                ctx.fillStyle = moonGrad;
+                ctx.beginPath();
+                ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+                ctx.fill();
+
+                requestAnimationFrame(render);
+            }
+            render();
+        }
+
+        // Ambient Particles Background
         const bgCanvas = document.getElementById('bgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
         let width = bgCanvas.width = window.innerWidth;
@@ -642,7 +906,7 @@
             height = bgCanvas.height = window.innerHeight;
         });
 
-        const particles = Array.from({ length: 35 }, () => ({
+        const particles = Array.from({ length: 40 }, () => ({
             x: Math.random() * width,
             y: Math.random() * height,
             r: Math.random() * 2 + 1,
