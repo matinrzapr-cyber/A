@@ -11,17 +11,23 @@
             -webkit-tap-highlight-color: transparent;
         }
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #05050d;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background: #0d0714;
             color: #fff;
             font-family: 'Tahoma', 'Vazirmatn', sans-serif;
             overflow: hidden;
         }
 
-        /* Screens Management */
+        /* Canvas Background */
+        canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+        }
+
+        /* Screens */
         .screen {
             position: absolute;
             top: 0; left: 0;
@@ -32,8 +38,9 @@
             align-items: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            transition: opacity 0.5s ease, visibility 0.5s;
             z-index: 10;
+            padding: 20px;
         }
         .screen.active {
             opacity: 1;
@@ -41,166 +48,190 @@
             z-index: 20;
         }
 
-        /* Glassmorphism Card Style */
+        /* Glassmorphic Box */
         .card {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 182, 193, 0.25);
-            padding: 30px 25px;
-            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            padding: 30px 20px;
+            border-radius: 28px;
             text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 20px rgba(255, 105, 180, 0.15);
-            max-width: 90%;
-            width: 350px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255, 105, 180, 0.2);
+            width: 100%;
+            max-width: 360px;
+            position: relative;
         }
 
-        h2 { color: #ffb3c6; margin-top: 0; font-size: 1.3rem; font-weight: normal; }
+        h2 { color: #ffb3c6; margin-top: 0; font-size: 1.3rem; }
         p { color: #e0e0e0; font-size: 0.95rem; line-height: 1.6; }
 
-        /* Buttons & Controls */
+        /* Custom Buttons */
         .btn {
             background: linear-gradient(45deg, #ff3366, #ff758c);
             border: none;
             color: white;
-            padding: 12px 30px;
+            padding: 13px 28px;
             font-size: 1rem;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 51, 102, 0.4);
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
             font-family: inherit;
             margin-top: 15px;
             font-weight: bold;
         }
-        .btn:active { transform: scale(0.95); }
+        .btn:active { transform: scale(0.92); }
 
         select {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: #fff;
             padding: 10px 14px;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 1rem;
             outline: none;
             font-family: inherit;
             margin: 5px;
         }
 
-        /* Quiz Choices */
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
+        /* Dodging Button Container */
+        .dodge-area {
+            position: relative;
             width: 100%;
+            height: 180px;
+            margin-top: 15px;
         }
-        .quiz-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        #dodge-btn {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ccc;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        /* Tapping Heart Game */
+        .tap-heart {
+            font-size: 5rem;
+            cursor: pointer;
+            margin: 15px 0;
+            display: inline-block;
+            transition: transform 0.1s ease;
+            filter: drop-shadow(0 0 15px #ff4081);
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 18px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff4081, #ff758c);
+            transition: width 0.15s ease;
+        }
+
+        /* Mystery Boxes */
+        .boxes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .gift-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            border-radius: 18px;
+            padding: 20px 10px;
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+        }
+        .gift-box:active { transform: scale(0.9); }
+        .gift-box.opened {
+            background: rgba(255, 105, 180, 0.25);
+            font-size: 0.85rem;
             color: #fff;
-            padding: 12px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-            font-family: inherit;
-        }
-        .quiz-btn:hover { background: rgba(255, 105, 180, 0.3); }
-
-        /* Smooth Canvas Heart */
-        canvas#heartCanvas {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
+            padding: 12px 8px;
+            border-color: #ff4081;
         }
 
-        /* Falling Heart Catcher Game */
-        .falling-heart {
-            position: absolute;
-            font-size: 2rem;
-            cursor: pointer;
-            z-index: 50;
-            animation: fall 3s linear forwards;
-            filter: drop-shadow(0 0 10px #ff4081);
-        }
-        @keyframes fall {
-            0% { transform: translateY(-50px) scale(0.8); opacity: 1; }
-            100% { transform: translateY(105vh) scale(1.2); opacity: 0; }
-        }
-
-        /* Floating Stars */
+        /* Final Stars */
         .star {
             position: absolute;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             cursor: pointer;
             z-index: 30;
-            filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 18px #ff69b4);
-            animation: float 4s ease-in-out infinite alternate, pulse 2s infinite alternate;
+            filter: drop-shadow(0 0 12px #ff69b4);
+            animation: float 3s ease-in-out infinite alternate;
         }
         @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-15px) rotate(15deg); }
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-12px); }
         }
-        @keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 1; } }
 
-        /* Envelope Icon */
         #envelope {
             position: absolute;
-            bottom: 30px;
-            font-size: 3rem;
+            bottom: 40px;
+            font-size: 3.5rem;
             cursor: pointer;
             z-index: 30;
             animation: bounce 2s infinite;
-            filter: drop-shadow(0 0 15px rgba(255,105,180,0.6));
+            filter: drop-shadow(0 0 20px #ff4081);
         }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-7px); }
+            40% { transform: translateY(-18px); }
         }
 
-        /* Modals */
+        /* Modal Popups */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
             z-index: 500;
             justify-content: center;
             align-items: center;
         }
         .modal-content {
             background: rgba(255, 255, 255, 0.95);
-            color: #222;
+            color: #111;
             padding: 25px;
-            border-radius: 20px;
-            max-width: 85%;
-            width: 400px;
+            border-radius: 24px;
+            max-width: 88%;
+            width: 380px;
             max-height: 80vh;
             overflow-y: auto;
             position: relative;
             text-align: justify;
             line-height: 1.8;
-            box-shadow: 0 10px 30px rgba(255,105,180,0.4);
+            box-shadow: 0 10px 30px rgba(255,105,180,0.5);
         }
         .close-btn {
             position: absolute;
-            top: 10px; left: 15px;
-            font-size: 1.6rem; cursor: pointer; color: #888;
+            top: 12px; left: 16px;
+            font-size: 1.6rem; cursor: pointer; color: #666;
         }
     </style>
 </head>
 <body>
 
-    <!-- Smooth Galactic Heart Canvas (Background) -->
-    <canvas id="heartCanvas"></canvas>
+    <!-- Particle Background -->
+    <canvas id="bgCanvas"></canvas>
 
     <!-- STEP 1: Lock Screen -->
     <div id="step-lock" class="screen active">
         <div class="card">
-            <h2>تاریخ آشناییمون رو انتخاب کن 🥹✨</h2>
+            <h2>تاریخ آشناییمون رو بزن ببینم یادته؟ 🧐✨</h2>
             <div>
                 <select id="daySelect"></select>
                 <select id="monthSelect">
@@ -219,35 +250,54 @@
                 </select>
             </div>
             <button class="btn" onclick="checkDate()">ورود 💖</button>
-            <p id="error-msg" style="color:#ff5252; display:none; margin-top:15px; font-size:0.85rem;">😔💔 هییییع یادت نیستتتت بچهههه؟! دوباره سعی کن!</p>
+            <p id="error-msg" style="color:#ff5252; display:none; margin-top:12px; font-size:0.85rem;">
+                😭💔 عاااخه بچهههه چطور یادت نیست؟! دوباره فکر کن!
+            </p>
         </div>
     </div>
 
-    <!-- STEP 2: Quiz Game -->
-    <div id="step-quiz" class="screen">
+    <!-- STEP 2: The Dodging Button Game -->
+    <div id="step-dodge" class="screen">
         <div class="card">
-            <h2 id="quiz-question">مرحله ۱: یک سوال مهم! 🤔</h2>
-            <p id="quiz-desc">کی توی رابطه‌مون بیشتر لوس میشه و ناز داره؟ 😜</p>
-            <div class="quiz-options">
-                <button class="quiz-btn" onclick="answerQuiz(true)">معلومه که من! (دختر کوچولو) 👑</button>
-                <button class="quiz-btn" id="wrong-btn" onclick="wrongAnswer()">تو! 🙈</button>
+            <h2>سوال مرحله اول 🤔</h2>
+            <p>راستشو بگو... چقدر منو دوست داری؟ 😜</p>
+            <div class="dodge-area">
+                <button class="btn" style="position: absolute; right: 10px; top: 20px;" onclick="nextStepFromDodge()">تا آسمون و ستاره‌ها! 🥰</button>
+                <button id="dodge-btn" style="left: 10px; top: 100px;" onmouseover="dodgeMe()" onclick="dodgeMe()" ontouchstart="dodgeMe()">یکم... 🤏</button>
             </div>
         </div>
     </div>
 
-    <!-- STEP 3: Falling Heart Catch Mini-Game -->
-    <div id="step-game" class="screen">
+    <!-- STEP 3: Tapping Heart Power-Up Game -->
+    <div id="step-tap" class="screen">
         <div class="card">
-            <h2>مرحله ۲: شکار قلب‌های آرزو 🎈</h2>
-            <p>برای باز کردن نامه نهایی، باید <b>۱۰ تا قلب</b> رو توی هوا لمس کنی!</p>
-            <h1 id="score-text" style="color:#ff4081; font-size:2.5rem; margin:10px 0;">0 / 10</h1>
-            <button class="btn" onclick="startGame()">شروع بازی 🎮</button>
+            <h2>مرحله دوم: شارژر باتری قلب ⚡</h2>
+            <p>باتری قلب من تموم شده! سریع تپ کن روی قلب تا شارژ بشه!</p>
+            <div class="tap-heart" id="pumpingHeart" onclick="tapHeart()">💓</div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="heartProgress"></div>
+            </div>
+            <p id="progressText" style="font-size: 0.85rem; color: #ffb3c6; margin-top: 8px;">شارژ: ۰٪</p>
         </div>
     </div>
 
-    <!-- STEP 4: Final Reward Screen -->
+    <!-- STEP 4: Mystery Vouchers Game -->
+    <div id="step-vouchers" class="screen">
+        <div class="card">
+            <h2>مرحله سوم: گردونه آرزوها 🎁</h2>
+            <p>۳ تا کادو انتخاب کن و کوپن‌هاتو جایزه بگیر!</p>
+            <div class="boxes-grid">
+                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن یک شام با غذا و خوراکی دلخواهت به حساب من!')">🎁</div>
+                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن یک ماساژ اختصاصی و ناز کشیدن بی‌شرط!')">🎁</div>
+                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن حق انتخاب تمام‌عیار فیلم بعدی که می‌بینیم!')">🎁</div>
+                <div class="gift-box" onclick="openBox(this, '🎟️ کوپن یک بغل محکم و طولانی هروقت کلافه بودی!')">🎁</div>
+            </div>
+            <button class="btn" id="finishVouchersBtn" style="display:none;" onclick="showFinalScreen()">دریافت جایزه نهایی 💌</button>
+        </div>
+    </div>
+
+    <!-- STEP 5: Final Reward Screen -->
     <div id="step-final" class="screen">
-        <!-- Floating Stars and Envelope will be injected here -->
         <div id="starsContainer"></div>
         <div id="envelope" onclick="openModal('letterModal')">💌</div>
     </div>
@@ -273,7 +323,57 @@
     </div>
 
     <script>
-        // Populate Days
+        // Web Audio Synthesizer (No external audio files needed!)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioContext();
+        }
+
+        function playPopSound() {
+            initAudio();
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.08);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+        }
+
+        function playBoingSound() {
+            initAudio();
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(120, audioCtx.currentTime + 0.15);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+        }
+
+        function playWinSound() {
+            initAudio();
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, idx) => {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.25, audioCtx.currentTime + idx * 0.1);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.1 + 0.25);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(audioCtx.currentTime + idx * 0.1);
+                osc.stop(audioCtx.currentTime + idx * 0.1 + 0.25);
+            });
+        }
+
+        // Date Select Setup
         const daySelect = document.getElementById('daySelect');
         for (let i = 1; i <= 31; i++) {
             let opt = document.createElement('option');
@@ -281,72 +381,76 @@
             daySelect.appendChild(opt);
         }
 
-        // Screen Navigation
         function showScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        // Step 1: Check Date
+        // STEP 1 Logic
         function checkDate() {
             const day = daySelect.value;
             const month = document.getElementById('monthSelect').value;
             if (day === "21" && month === "اردیبهشت") {
-                showScreen('step-quiz');
+                playWinSound();
+                showScreen('step-dodge');
             } else {
+                playBoingSound();
                 document.getElementById('error-msg').style.display = 'block';
             }
         }
 
-        // Step 2: Quiz Logic
-        function wrongAnswer() {
-            alert("نخیرم! اشتباه حدس زدی 😜 دوباره انتخاب کن!");
+        // STEP 2 Dodging Button Logic
+        function dodgeMe() {
+            playBoingSound();
+            const btn = document.getElementById('dodge-btn');
+            const x = Math.random() * 180 - 90;
+            const y = Math.random() * 120 - 60;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
         }
-        function answerQuiz(isCorrect) {
-            if(isCorrect) {
-                showScreen('step-game');
+
+        function nextStepFromDodge() {
+            playWinSound();
+            showScreen('step-tap');
+        }
+
+        // STEP 3 Tapping Heart Logic
+        let tapCount = 0;
+        const maxTaps = 15;
+        function tapHeart() {
+            playPopSound();
+            tapCount++;
+            const heart = document.getElementById('pumpingHeart');
+            const fill = document.getElementById('heartProgress');
+            const text = document.getElementById('progressText');
+
+            heart.style.transform = `scale(${1 + tapCount * 0.04})`;
+            let pct = Math.min(100, Math.round((tapCount / maxTaps) * 100));
+            fill.style.width = pct + '%';
+            text.innerText = `شارژ: ${pct}٪`;
+
+            if (tapCount >= maxTaps) {
+                playWinSound();
+                text.innerText = "💥 شارژ کامل! انفجار عشق! 💖";
+                setTimeout(() => showScreen('step-vouchers'), 1000);
             }
         }
 
-        // Step 3: Catch Hearts Game
-        let score = 0;
-        let gameInterval = null;
+        // STEP 4 Mystery Boxes Logic
+        let openedCount = 0;
+        function openBox(element, voucherText) {
+            if (element.classList.contains('opened')) return;
+            playPopSound();
+            element.classList.add('opened');
+            element.innerText = voucherText;
+            openedCount++;
 
-        function startGame() {
-            score = 0;
-            document.getElementById('score-text').innerText = "0 / 10";
-            gameInterval = setInterval(spawnHeart, 600);
-        }
-
-        function spawnHeart() {
-            if (score >= 10) {
-                clearInterval(gameInterval);
-                return;
+            if (openedCount >= 3) {
+                playWinSound();
+                document.getElementById('finishVouchersBtn').style.display = 'inline-block';
             }
-            const heart = document.createElement('div');
-            heart.className = 'falling-heart';
-            heart.innerText = ['❤️', '💖', '💗', '💕'][Math.floor(Math.random() * 4)];
-            heart.style.left = Math.random() * (window.innerWidth - 60) + 'px';
-            
-            heart.onclick = () => {
-                score++;
-                document.getElementById('score-text').innerText = `${score} / 10`;
-                heart.remove();
-                if (score >= 10) {
-                    clearInterval(gameInterval);
-                    setTimeout(() => {
-                        alert("آفرین! تمام مراحل رو با موفقیت رد کردی 🎉✨");
-                        showScreen('step-final');
-                        initFinalStep();
-                    }, 500);
-                }
-            };
-
-            document.body.appendChild(heart);
-            setTimeout(() => { if (heart.parentNode) heart.remove(); }, 3000);
         }
 
-        // Step 4: Final Stars & Messages
+        // STEP 5 Final Stars Logic
         const starMessages = [
             "ستاره ۱: اولین باری که دیدمت، بهترین روز زندگیم شد ✨",
             "ستاره ۲: لبخندت قشنگ‌ترین تصویر دنیاست 💖",
@@ -360,15 +464,16 @@
             "ستاره ۱۰: همیشه و همه‌جا قلباً پیشتم 💍"
         ];
 
-        function initFinalStep() {
+        function showFinalScreen() {
+            showScreen('step-final');
             const container = document.getElementById('starsContainer');
             container.innerHTML = '';
             const positions = [
-                { top: '15%', left: '15%' }, { top: '25%', left: '80%' },
-                { top: '40%', left: '10%' }, { top: '60%', left: '85%' },
-                { top: '75%', left: '20%' }, { top: '20%', left: '50%' },
-                { top: '80%', left: '70%' }, { top: '50%', left: '90%' },
-                { top: '65%', left: '5%'  }, { top: '35%', left: '70%' }
+                { top: '12%', left: '15%' }, { top: '22%', left: '78%' },
+                { top: '38%', left: '12%' }, { top: '58%', left: '82%' },
+                { top: '72%', left: '18%' }, { top: '18%', left: '48%' },
+                { top: '78%', left: '68%' }, { top: '48%', left: '88%' },
+                { top: '62%', left: '8%'  }, { top: '32%', left: '68%' }
             ];
 
             starMessages.forEach((msg, index) => {
@@ -378,6 +483,7 @@
                 star.style.top = positions[index].top;
                 star.style.left = positions[index].left;
                 star.onclick = () => {
+                    playPopSound();
                     document.getElementById('starText').innerText = msg;
                     openModal('starModal');
                 };
@@ -385,53 +491,44 @@
             });
         }
 
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function openModal(id) {
+            playPopSound();
+            document.getElementById(id).style.display = 'flex';
+        }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // ==========================================
-        // Ultra-Smooth High-FPS Galactic Heart Canvas
-        // ==========================================
-        const canvas = document.getElementById('heartCanvas');
+        // Particles Animation (Background)
+        const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
 
-        let time = 0;
-        function drawHeart() {
-            // Smooth background trail
-            ctx.fillStyle = 'rgba(5, 5, 13, 0.2)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const particles = Array.from({ length: 45 }, () => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 3 + 1,
+            speedY: Math.random() * 0.8 + 0.2,
+            opacity: Math.random() * 0.7 + 0.3
+        }));
 
-            ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-
-            const scale = Math.min(canvas.width, canvas.height) / 40;
-            const beat = 1 + 0.05 * Math.sin(time * 3);
-
-            for (let i = 0; i < 80; i++) {
-                let t = time + i * 0.08;
-                let x = 16 * Math.pow(Math.sin(t), 3);
-                let y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-
-                x *= scale * beat;
-                y *= scale * beat;
-
-                ctx.fillStyle = `hsl(${320 + Math.sin(t) * 40}, 100%, 65%)`;
+        function animateBg() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.y -= p.speedY;
+                if (p.y < 0) p.y = height;
+                ctx.fillStyle = `rgba(255, 182, 193, ${p.opacity})`;
                 ctx.beginPath();
-                ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
-            }
-
-            ctx.restore();
-            time += 0.03;
-            requestAnimationFrame(drawHeart);
+            });
+            requestAnimationFrame(animateBg);
         }
-        drawHeart();
+        animateBg();
     </script>
 </body>
 </html>
